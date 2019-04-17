@@ -1,0 +1,93 @@
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+c:\users\desarrollo4\source\repos\LSTABINT SERV\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+C:\Users\Usuario\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+C:\Users\DESARROLLO2\Desktop\Miguel\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\DESARROLLO2\Desktop\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+E:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+F:\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\EntityFramework.dll
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\EntityFramework.xml
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CopyComplete
