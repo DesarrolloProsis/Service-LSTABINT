@@ -60,7 +60,7 @@ namespace LSTABINT_SERV
             try
             {
                 Ping ping = new Ping();
-                PingReply pingReply = ping.Send("192.168.1.138");
+                PingReply pingReply = ping.Send("10.1.10.111");
                 if (pingReply.Status == IPStatus.Success)
                 {
 
@@ -159,23 +159,43 @@ namespace LSTABINT_SERV
             File.Delete(varenca.VOrigen);
             File.AppendAllLines(varenca.VOrigen, header);
             File.AppendAllLines(varenca.VOrigen, lines);
-            MoverLstabint(varenca);
+            MoverLstabint(varenca, i);
             return varenca;
         }
 
-        private void MoverLstabint(variables var)
+        private void MoverLstabint(variables var, int i)
         {
             try
             {
-                if (File.Exists(var.VDestino) == false)
+                if (i == 0)
                 {
-                    File.Move(var.VOrigen, var.VDestino + var.extension);
-                    File.Delete(var.VOrigen);
+                    if (File.Exists(var.VDestino) == false)
+                    {
+                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                        File.Delete(var.VOrigen);
+                    }
+                    else
+                    {
+                        File.Delete(var.VDestino);
+                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                    }
                 }
                 else
                 {
-                    File.Delete(var.VDestino);
-                    File.Move(var.VOrigen, var.VDestino + var.extension);
+                    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO\", "LSTABINT.*"))
+                    {
+                        File.Delete(item);
+                    }
+                    if (File.Exists(var.VDestino) == false)
+                    {
+                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                        File.Delete(var.VOrigen);
+                    }
+                    else
+                    {
+                        File.Delete(var.VDestino);
+                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                    }
                 }
             }
             catch (Exception Ex)

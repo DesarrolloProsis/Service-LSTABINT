@@ -100,3 +100,21 @@ C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\WindowsF
 C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\WindowsFormsApp2\bin\Debug\EntityFramework.xml
 C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Rodrigo\Desktop\USB Backup\Proyectos\Guatemala\LSTABINTSERVICE\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe.config
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.pdb
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.dll
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.exe
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.pdb
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.xml
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csprojAssemblyReference.cache
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Form1.resources
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResource.cache
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CopyComplete
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
