@@ -20,7 +20,7 @@ namespace LSTABINT_SERV
     public partial class LSTABINTSERVICE : ServiceBase
     {
         private System.Timers.Timer tmGenera = null;
-        private AppDbContext db = new AppDbContext();
+        private GTDBEntities db = new GTDBEntities();
         public LSTABINTSERVICE()
         {
             InitializeComponent();
@@ -60,7 +60,8 @@ namespace LSTABINT_SERV
             try
             {
                 Ping ping = new Ping();
-                PingReply pingReply = ping.Send("10.1.10.111");
+                //PingReply pingReply = ping.Send("10.1.10.111");
+                PingReply pingReply = ping.Send("192.168.0.69");
                 if (pingReply.Status == IPStatus.Success)
                 {
 
@@ -87,6 +88,7 @@ namespace LSTABINT_SERV
                 }
                 else
                 {
+                    var TamañoLista = new string[2];
                     foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
                         File.Delete(item);
@@ -97,6 +99,14 @@ namespace LSTABINT_SERV
                         varparametros = parametros(varparametros, i);
                         archivonormal(varparametros, i);
                         encabezados(varparametros, i);
+                        TamañoLista[i] =  new FileInfo (varparametros.VDestino + varparametros.extension).Length.ToString();
+                        db.HistoricoListas.Add(new HistoricoListas
+                        {
+                            Fecha_Creacion = DateTime.Now,
+                            Tamaño = TamañoLista[i] + " KB",
+                            Extension = varparametros.extension,
+                            Tipo = i == 0 ? "MultiModal" : "Exclusivo"
+                        });
                         varparametros.Equals(null);
                     }
                     var listas = db.Parametrizables.ToList();
@@ -104,6 +114,7 @@ namespace LSTABINT_SERV
                     {
                         item.extension++;
                     }
+                    
                     db.SaveChanges();
                     tmGenera.Enabled = true;
                 }
@@ -169,20 +180,19 @@ namespace LSTABINT_SERV
             {
                 if (i == 0)
                 {
-                    if (File.Exists(var.VDestino) == false)
+                    if (!File.Exists(var.VDestino + var.extension))
                     {
                         File.Move(var.VOrigen, var.VDestino + var.extension);
-                        File.Delete(var.VOrigen);
                     }
                     else
                     {
-                        File.Delete(var.VDestino);
+                        File.Delete(var.VDestino + var.extension);
                         File.Move(var.VOrigen, var.VDestino + var.extension);
                     }
                 }
                 else
                 {
-                    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO\", "LSTABINT.*"))
+                    foreach (var item in Directory.GetFiles(@"\\192.168.0.69\geaint\PARAM\MontoMinimo\", "LSTABINT.*"))
                     {
                         File.Delete(item);
                     }
@@ -193,7 +203,7 @@ namespace LSTABINT_SERV
                     }
                     else
                     {
-                        File.Delete(var.VDestino);
+                        File.Delete(var.VDestino + var.extension);
                         File.Move(var.VOrigen, var.VDestino + var.extension);
                     }
                 }

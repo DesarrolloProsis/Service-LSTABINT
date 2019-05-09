@@ -12,13 +12,12 @@ namespace LSTABINT_SERV.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserClaims
+    public partial class HistoricoListas
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-    
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public long Id { get; set; }
+        public string Extension { get; set; }
+        public string Tamaño { get; set; }
+        public System.DateTime Fecha_Creacion { get; set; }
+        public string Tipo { get; set; }
     }
 }

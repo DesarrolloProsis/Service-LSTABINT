@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AppDbContextStoreContainer" CdmEntityContainer="GTDBEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="AppDbContext.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="AppDbContext.AspNetRoles">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="AppDbContext.AspNetUserClaims">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="AppDbContext.AspNetUserLogins">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="AppDbContext.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="AppDbContext.Clientes">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NumCliente" ColumnName="NumCliente" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="EmailCliente" ColumnName="EmailCliente" />
+          <ScalarProperty Name="AddressCliente" ColumnName="AddressCliente" />
+          <ScalarProperty Name="PhoneCliente" ColumnName="PhoneCliente" />
+          <ScalarProperty Name="StatusCliente" ColumnName="StatusCliente" />
+          <ScalarProperty Name="DateTCliente" ColumnName="DateTCliente" />
+          <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+          <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+          <ScalarProperty Name="CP" ColumnName="CP" />
+          <ScalarProperty Name="Pais" ColumnName="Pais" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+          <ScalarProperty Name="NIT" ColumnName="NIT" />
+          <ScalarProperty Name="PhoneOffice" ColumnName="PhoneOffice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CortesCajeroes">
+      <EntityTypeMapping TypeName="AppDbContext.CortesCajeroes">
+        <MappingFragment StoreEntitySet="CortesCajeroes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NumCorte" ColumnName="NumCorte" />
+          <ScalarProperty Name="DateTApertura" ColumnName="DateTApertura" />
+          <ScalarProperty Name="DateTCierre" ColumnName="DateTCierre" />
+          <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CuentasTelepeajes">
+      <EntityTypeMapping TypeName="AppDbContext.CuentasTelepeajes">
+        <MappingFragment StoreEntitySet="CuentasTelepeajes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NumCuenta" ColumnName="NumCuenta" />
+          <ScalarProperty Name="SaldoCuenta" ColumnName="SaldoCuenta" />
+          <ScalarProperty Name="TypeCuenta" ColumnName="TypeCuenta" />
+          <ScalarProperty Name="StatusCuenta" ColumnName="StatusCuenta" />
+          <ScalarProperty Name="StatusResidenteCuenta" ColumnName="StatusResidenteCuenta" />
+          <ScalarProperty Name="DateTCuenta" ColumnName="DateTCuenta" />
+          <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+          <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Historico">
+      <EntityTypeMapping TypeName="AppDbContext.Historico">
+        <MappingFragment StoreEntitySet="Historico">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Carril" ColumnName="Carril" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
+          <ScalarProperty Name="Plaza" ColumnName="Plaza" />
+          <ScalarProperty Name="Cuerpo" ColumnName="Cuerpo" />
+          <ScalarProperty Name="Clase" ColumnName="Clase" />
+          <ScalarProperty Name="Operador" ColumnName="Operador" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+          <ScalarProperty Name="Evento" ColumnName="Evento" />
+          <ScalarProperty Name="SaldoAnterior" ColumnName="SaldoAnterior" />
+          <ScalarProperty Name="SaldoActualizado" ColumnName="SaldoActualizado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ListaNegra">
+      <EntityTypeMapping TypeName="AppDbContext.ListaNegra">
+        <MappingFragment StoreEntitySet="ListaNegra">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+          <ScalarProperty Name="SaldoAnterior" ColumnName="SaldoAnterior" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+          <ScalarProperty Name="Clase" ColumnName="Clase" />
+          <ScalarProperty Name="NumCliente" ColumnName="NumCliente" />
+          <ScalarProperty Name="NumCuenta" ColumnName="NumCuenta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MontosRecargables">
+      <EntityTypeMapping TypeName="AppDbContext.MontosRecargables">
+        <MappingFragment StoreEntitySet="MontosRecargables">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OperacionesCajeroes">
+      <EntityTypeMapping TypeName="AppDbContext.OperacionesCajeroes">
+        <MappingFragment StoreEntitySet="OperacionesCajeroes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+          <ScalarProperty Name="TipoPago" ColumnName="TipoPago" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="DateTOperacion" ColumnName="DateTOperacion" />
+          <ScalarProperty Name="CorteId" ColumnName="CorteId" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="CobroTag" ColumnName="CobroTag" />
+          <ScalarProperty Name="NoReferencia" ColumnName="NoReferencia" />
+          <ScalarProperty Name="StatusCancelacion" ColumnName="StatusCancelacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OperacionesSerBIpagos">
+      <EntityTypeMapping TypeName="AppDbContext.OperacionesSerBIpagos">
+        <MappingFragment StoreEntitySet="OperacionesSerBIpagos">
+          <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="NoReferencia" ColumnName="NoReferencia" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NumAutoriProveedor" ColumnName="NumAutoriProveedor" />
+          <ScalarProperty Name="NumAutoriBanco" ColumnName="NumAutoriBanco" />
+          <ScalarProperty Name="SaldoAnterior" ColumnName="SaldoAnterior" />
+          <ScalarProperty Name="SaldoModificar" ColumnName="SaldoModificar" />
+          <ScalarProperty Name="SaldoActual" ColumnName="SaldoActual" />
+          <ScalarProperty Name="StatusOperacion" ColumnName="StatusOperacion" />
+          <ScalarProperty Name="DateTOpSerBI" ColumnName="DateTOpSerBI" />
+          <ScalarProperty Name="TagId" ColumnName="TagId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametrizables">
+      <EntityTypeMapping TypeName="AppDbContext.Parametrizables">
+        <MappingFragment StoreEntitySet="Parametrizables">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="origen" ColumnName="origen" />
+          <ScalarProperty Name="destino" ColumnName="destino" />
+          <ScalarProperty Name="extension" ColumnName="extension" />
+          <ScalarProperty Name="destinoresidente" ColumnName="destinoresidente" />
+          <ScalarProperty Name="cruzes" ColumnName="cruzes" />
+          <ScalarProperty Name="minutos" ColumnName="minutos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="AppDbContext.Tags">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NumTag" ColumnName="NumTag" />
+          <ScalarProperty Name="SaldoTag" ColumnName="SaldoTag" />
+          <ScalarProperty Name="StatusTag" ColumnName="StatusTag" />
+          <ScalarProperty Name="StatusResidente" ColumnName="StatusResidente" />
+          <ScalarProperty Name="DateTTag" ColumnName="DateTTag" />
+          <ScalarProperty Name="CuentaId" ColumnName="CuentaId" />
+          <ScalarProperty Name="IdCajero" ColumnName="IdCajero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="AppDbContext.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="HistoricoListas">
+      <EntityTypeMapping TypeName="AppDbContext.HistoricoListas">
+        <MappingFragment StoreEntitySet="HistoricoListas">
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Fecha_Creacion" ColumnName="Fecha_Creacion" />
+          <ScalarProperty Name="Tamaño" ColumnName="Tamaño" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_StatusTag" FunctionName="AppDbContext.Store.sp_StatusTag" />
+  </EntityContainerMapping>
+</Mapping>
