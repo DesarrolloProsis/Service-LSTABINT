@@ -35,7 +35,7 @@ namespace LSTABINT_SERV
         {
 
             tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 30000;
+            tmGenera.Interval = 180000;
             tmGenera.Elapsed += TmGenera_Elapsed;
             tmGenera.Enabled = true;
             tmGenera.Start();
@@ -45,7 +45,7 @@ namespace LSTABINT_SERV
             //eventLog1.WriteEntry("Termine");
 
             tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 10000;
+            tmGenera.Interval = 1800;
             tmGenera.Elapsed += TmGenera_Elapsed;
             tmGenera.Enabled = true;
             tmGenera.Start();
@@ -102,7 +102,11 @@ namespace LSTABINT_SERV
                     var listas = db.Parametrizables.ToList();
                     foreach (var item in listas)
                     {
+
                         item.extension++;
+                        if (item.extension > 999 ){
+                            item.extension = 1;
+                        }
                     }
                     db.SaveChanges();
                     tmGenera.Enabled = true;
@@ -142,6 +146,7 @@ namespace LSTABINT_SERV
         }
         public variables encabezados(variables varenca, int i)
         {
+            
             var aplicationdate = DateTime.Now.ToString("yyyyMMddHHmm");
             var creationdate = DateTime.Now.ToString("yyyyMMddHHmm");
             string formato = "000000";
@@ -217,7 +222,7 @@ namespace LSTABINT_SERV
             if (i == 0)
                 consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
             else
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=15000, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
+                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
             var cmd = new SqlCommand(consulta, conexion);
             cmd.CommandTimeout = 3 * 60;
             cmd.ExecuteNonQuery();

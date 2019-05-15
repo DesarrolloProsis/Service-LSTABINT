@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="42992">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="43504">
       <assemblyIdentity name="LSTABINT SERV" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dNMtKrXbflj0AC6G5tDDcxTtm3NRALhYj167kr8xza0=</dsig:DigestValue>
+        <dsig:DigestValue>tl4r1BOSIg2D7P8x7MnLQlNuVAPVuDBu9UeWjncALME=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
