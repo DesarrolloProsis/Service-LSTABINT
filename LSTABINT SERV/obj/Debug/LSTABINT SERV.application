@@ -7,14 +7,18 @@
     <framework targetVersion="4.6.1" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="LSTABINT SERV.exe.manifest" size="4907">
+    <dependentAssembly dependencyType="install" codebase="LSTABINT SERV.exe.manifest" size="5716">
       <assemblyIdentity name="LSTABINT SERV.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+<<<<<<< HEAD
         <dsig:DigestValue>h57EAm7nS/SO2TnnjrAGDUsbWtzaCcuEdMHVqOxDLJs=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>JJgbZ0JQPnCsED2aSxiDngcFVrjqWBEFAXDbVim4qdY=</dsig:DigestValue>
+>>>>>>> 3503d842c73daf93ddf94d30e2f645d96ba9d976
       </hash>
     </dependentAssembly>
   </dependency>

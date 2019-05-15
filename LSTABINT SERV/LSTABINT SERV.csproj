@@ -87,22 +87,69 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\AppDbContext.cs" />
-    <Compile Include="Model\AspNetRoles.cs" />
-    <Compile Include="Model\AspNetUserClaims.cs" />
-    <Compile Include="Model\AspNetUserLogins.cs" />
-    <Compile Include="Model\AspNetUsers.cs" />
-    <Compile Include="Model\Clientes.cs" />
-    <Compile Include="Model\CortesCajeroes.cs" />
-    <Compile Include="Model\CuentasTelepeajes.cs" />
-    <Compile Include="Model\C__MigrationHistory.cs" />
-    <Compile Include="Model\Historico.cs" />
-    <Compile Include="Model\ListaNegra.cs" />
-    <Compile Include="Model\MontosRecargables.cs" />
-    <Compile Include="Model\OperacionesCajeroes.cs" />
-    <Compile Include="Model\OperacionesSerBIpagos.cs" />
-    <Compile Include="Model\Parametrizables.cs" />
-    <Compile Include="Model\Tags.cs" />
+    <Compile Include="Model\AppDbContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppDbContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AppDbContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AppDbContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppDbContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetRoles.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetUserClaims.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetUserLogins.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AspNetUsers.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CortesCajeroes.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CuentasTelepeajes.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\C__MigrationHistory.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Historico.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HistoricoListas.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ListaNegra.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MontosRecargables.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OperacionesCajeroes.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OperacionesSerBIpagos.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametrizables.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tags.cs">
+      <DependentUpon>AppDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -120,8 +167,17 @@
     <Compile Include="variables.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="LSTABINT SERV_TemporaryKey.pfx" />
+    <EntityDeploy Include="Model\AppDbContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AppDbContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\AppDbContext.edmx.diagram">
+      <DependentUpon>AppDbContext.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +202,21 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\AppDbContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AppDbContext.edmx</DependentUpon>
+      <LastGenOutput>AppDbContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\AppDbContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AppDbContext.edmx</DependentUpon>
+      <LastGenOutput>AppDbContext.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

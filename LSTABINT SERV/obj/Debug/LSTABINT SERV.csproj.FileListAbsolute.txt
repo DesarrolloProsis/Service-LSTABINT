@@ -110,3 +110,22 @@ C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.xml
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CoreCompileInputs.cache
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CopyComplete
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
