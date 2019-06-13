@@ -35,7 +35,7 @@ namespace LSTABINT_SERV
         {
 
             tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 180000;
+            tmGenera.Interval = 300000;
             tmGenera.Elapsed += TmGenera_Elapsed;
             tmGenera.Enabled = true;
             tmGenera.Start();
@@ -45,7 +45,7 @@ namespace LSTABINT_SERV
             //eventLog1.WriteEntry("Termine");
 
             tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 1800;
+            tmGenera.Interval = 300000;
             tmGenera.Elapsed += TmGenera_Elapsed;
             tmGenera.Enabled = true;
             tmGenera.Start();
@@ -60,8 +60,8 @@ namespace LSTABINT_SERV
             try
             {
                 Ping ping = new Ping();
-                //PingReply pingReply = ping.Send("10.1.10.111");
-                PingReply pingReply = ping.Send("192.168.0.69");
+                PingReply pingReply = ping.Send("10.1.10.111");
+                //PingReply pingReply = ping.Send("192.168.0.69");
                 if (pingReply.Status == IPStatus.Success)
                 {
 
@@ -72,7 +72,8 @@ namespace LSTABINT_SERV
             }
             catch (Exception Ex)
             {
-                MessageBox.Show("Proporcione credenciales al servidor", "Error", MessageBoxButtons.OK);
+                tmGenera.Enabled = true;
+                File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message);
                 return false;
             }
         }
@@ -125,7 +126,8 @@ namespace LSTABINT_SERV
             }
             catch (Exception Ex)
             {
-                MessageBox.Show(Ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tmGenera.Enabled = true;
+                //MessageBox.Show(Ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message);
             }
 
@@ -138,45 +140,62 @@ namespace LSTABINT_SERV
         }
         public variables parametros(variables nuevasvar, int i)
         {
-            var parametrizable = db.Parametrizables.ToList();
-            if (parametrizable.Count == 2)
+            try
             {
-                nuevasvar.VOrigen = parametrizable[i].origen;
-                nuevasvar.VDestino = parametrizable[i].destino;
-                nuevasvar.extension = parametrizable[i].extension.ToString();
-                char[] prueba = nuevasvar.extension.ToCharArray();
-                nuevasvar.extension = nuevasvar.extension.PadLeft(3, '0');
+                var parametrizable = db.Parametrizables.ToList();
+                if (parametrizable.Count == 2)
+                {
+                    nuevasvar.VOrigen = parametrizable[i].origen;
+                    nuevasvar.VDestino = parametrizable[i].destino;
+                    nuevasvar.extension = parametrizable[i].extension.ToString();
+                    char[] prueba = nuevasvar.extension.ToCharArray();
+                    nuevasvar.extension = nuevasvar.extension.PadLeft(3, '0');
+                }
+                bool exists = System.IO.Directory.Exists(nuevasvar.VOrigen);
+                if (!exists)
+                {
+                    System.IO.Directory.CreateDirectory(nuevasvar.VOrigen);
+                }
+                nuevasvar.VOrigen = nuevasvar.VOrigen + nuevasvar.extension;
+                return nuevasvar;
             }
-            bool exists = System.IO.Directory.Exists(nuevasvar.VOrigen);
-            if (!exists)
+            catch (Exception Ex)
             {
-                System.IO.Directory.CreateDirectory(nuevasvar.VOrigen);
+                File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message);
+                throw;
             }
-            nuevasvar.VOrigen = nuevasvar.VOrigen + nuevasvar.extension;
-            return nuevasvar;
+            
         }
         public variables encabezados(variables varenca, int i)
         {
-            
-            var aplicationdate = DateTime.Now.ToString("yyyyMMddHHmm");
-            var creationdate = DateTime.Now.ToString("yyyyMMddHHmm");
-            string formato = "000000";
-            string[] lines = System.IO.File.ReadAllLines(varenca.VOrigen);
-            string countlines = lines.LongLength.ToString(formato);
-            countlines = countlines.Substring(countlines.Length - 6, 6);
-            countlines = Convert.ToInt32(countlines).ToString();
-            countlines = countlines.PadLeft(6, '0');
-            string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
-            foreach (var item in lines)
+            try
             {
-                item.Trim();
+                var aplicationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
+                var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
+                string formato = "000000";
+                string[] lines = System.IO.File.ReadAllLines(varenca.VOrigen);
+                string countlines = lines.LongLength.ToString(formato);
+                countlines = countlines.Substring(countlines.Length - 6, 6);
+                countlines = Convert.ToInt32(countlines).ToString();
+                countlines = countlines.PadLeft(6, '0');
+                string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
+                foreach (var item in lines)
+                {
+                    item.Trim();
+                }
+                string[] header = new string[1] { encabezados };
+                File.Delete(varenca.VOrigen);
+                File.AppendAllLines(varenca.VOrigen, header);
+                File.AppendAllLines(varenca.VOrigen, lines);
+                MoverLstabint(varenca, i);
+                return varenca;
             }
-            string[] header = new string[1] { encabezados };
-            File.Delete(varenca.VOrigen);
-            File.AppendAllLines(varenca.VOrigen, header);
-            File.AppendAllLines(varenca.VOrigen, lines);
-            MoverLstabint(varenca, i);
-            return varenca;
+            catch (Exception Ex)
+            {
+                File.WriteAllText(@"C:\temporal\Error" + varenca.extension + ".txt", Ex.Message);
+                throw;
+            }
+            
         }
 
         private void MoverLstabint(variables var, int i)
@@ -197,7 +216,7 @@ namespace LSTABINT_SERV
                 }
                 else
                 {
-                    foreach (var item in Directory.GetFiles(@"\\192.168.0.69\geaint\PARAM\MontoMinimo\", "LSTABINT.*"))
+                    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
                     {
                         File.Delete(item);
                     }
@@ -223,19 +242,28 @@ namespace LSTABINT_SERV
 
         public void archivonormal(variables variableslistas, int i)
         {
-            string query = "data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
-            var conexion = new SqlConnection();
-            conexion.ConnectionString = query;
-            conexion.Open();
-            string final = "\\0'";
-            string consulta;
-            if (i == 0)
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
-            else
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
-            var cmd = new SqlCommand(consulta, conexion);
-            cmd.CommandTimeout = 3 * 60;
-            cmd.ExecuteNonQuery();
+            try
+            {
+                string query = "data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
+                var conexion = new SqlConnection();
+                conexion.ConnectionString = query;
+                conexion.Open();
+                string final = "\\0'";
+                string consulta;
+                if (i == 0)
+                    consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
+                else
+                    consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
+                var cmd = new SqlCommand(consulta, conexion);
+                cmd.CommandTimeout = 3 * 60;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception Ex)
+            {
+                File.WriteAllText(@"C:\temporal\Error" + variableslistas.extension + ".txt", Ex.Message);
+                throw;
+            }
+           
         }
     }
 }
