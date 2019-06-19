@@ -45,7 +45,7 @@ namespace LSTABINT_SERV
             //eventLog1.WriteEntry("Termine");
 
             tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 300000;
+            tmGenera.Interval = 10000;
             tmGenera.Elapsed += TmGenera_Elapsed;
             tmGenera.Enabled = true;
             tmGenera.Start();
@@ -202,16 +202,19 @@ namespace LSTABINT_SERV
         {
             try
             {
+                string nuevoorigen;
                 if (i == 0)
                 {
                     if (!File.Exists(var.VDestino + var.extension))
                     {
-                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+                        File.Copy(nuevoorigen, var.VDestino + var.extension);
                     }
                     else
                     {
                         File.Delete(var.VDestino + var.extension);
-                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+                        File.Copy(nuevoorigen, var.VDestino + var.extension);
                     }
                 }
                 else
@@ -220,15 +223,16 @@ namespace LSTABINT_SERV
                     {
                         File.Delete(item);
                     }
-                    if (File.Exists(var.VDestino) == false)
+                    if (!File.Exists(var.VDestino))
                     {
-                        File.Move(var.VOrigen, var.VDestino + var.extension);
-                        File.Delete(var.VOrigen);
+                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+                        File.Copy(nuevoorigen, var.VDestino + var.extension);
                     }
                     else
                     {
                         File.Delete(var.VDestino + var.extension);
-                        File.Move(var.VOrigen, var.VDestino + var.extension);
+                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+                        File.Copy(nuevoorigen, var.VDestino + var.extension);
                     }
                 }
             }
@@ -238,6 +242,29 @@ namespace LSTABINT_SERV
                 throw;
             }
 
+        }
+
+        public string GuardarLSTABINT(string actualpath, int i)
+        {
+            string LstabintPath;
+            if (i == 0)
+            {
+                 LstabintPath = @"C:\temporal\LSTABINT\";
+            }
+            else
+            {
+                LstabintPath = @"C:\temporal\MontoMinimo\";
+            }
+            string dia = DateTime.Now.ToString("dd MMMM yyyy");
+            string[] ArrayFecha = dia.Split(' ');
+            LstabintPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0];
+            if (!Directory.Exists(LstabintPath))
+            {
+                Directory.CreateDirectory(LstabintPath);
+            }
+            actualpath = LstabintPath + actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
+            File.Move(actualpath, LstabintPath + actualpath);
+            return actualpath;
         }
 
         public void archivonormal(variables variableslistas, int i)
