@@ -14,12 +14,15 @@ using System.Windows.Forms;
 using System.DirectoryServices;
 using System.Security;
 using LSTABINT_SERV.Model;
+using System.Data.Common;
+using Telegram.Bot;
 
 namespace LSTABINT_SERV
 {
     public partial class LSTABINTSERVICE : ServiceBase
     {
         private System.Timers.Timer tmGenera = null;
+        private static readonly TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
         private GTDBEntities db = new GTDBEntities();
         public LSTABINTSERVICE()
         {
@@ -89,6 +92,7 @@ namespace LSTABINT_SERV
                 }
                 else
                 {
+                    bool Validado = false;
                     var TamañoLista = new string[2];
                     foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
@@ -99,29 +103,38 @@ namespace LSTABINT_SERV
                         variables varparametros = new variables();
                         varparametros = parametros(varparametros, i);
                         archivonormal(varparametros, i);
-                        encabezados(varparametros, i);
-                        TamañoLista[i] =  new FileInfo (varparametros.VDestino + varparametros.extension).Length.ToString();
-                        db.HistoricoListas.Add(new HistoricoListas
+                        Validado = validaciones(varparametros, i);
+                        if (Validado)
                         {
-                            Fecha_Creacion = DateTime.Now,
-                            Tamaño = TamañoLista[i] + " KB",
-                            Extension = varparametros.extension,
-                            Tipo = i == 0 ? "MultiModal" : "Exclusivo"
-                        });
-                        varparametros.Equals(null);
-                    }
-                    var listas = db.Parametrizables.ToList();
-                    foreach (var item in listas)
-                    {
-
-                        item.extension++;
-                        if (item.extension > 999 ){
-                            item.extension = 1;
+                            TamañoLista[i] = new FileInfo(varparametros.VDestino + varparametros.extension).Length.ToString();
+                            db.HistoricoListas.Add(new HistoricoListas
+                            {
+                                Fecha_Creacion = DateTime.Now,
+                                Tamaño = TamañoLista[i] + " KB",
+                                Extension = varparametros.extension,
+                                Tipo = i == 0 ? "MultiModal" : "Exclusivo"
+                            });
+                            varparametros.Equals(null);
                         }
                     }
-                    
-                    db.SaveChanges();
-                    tmGenera.Enabled = true;
+                    if (Validado)
+                    {
+                        var listas = db.Parametrizables.ToList();
+                        foreach (var item in listas)
+                        {
+                            item.extension++;
+                            if (item.extension > 999)
+                            {
+                                item.extension = 1;
+                            }
+                        }
+                        db.SaveChanges();
+                        tmGenera.Enabled = true;
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
             catch (Exception Ex)
@@ -138,6 +151,12 @@ namespace LSTABINT_SERV
 
             //EventLog.WriteEntry("El servicio se ha detenido");
         }
+
+        public async void CheckServiceTags()
+        {
+            await Bot.SendTextMessageAsync(-364639169, "No coincide el número de tags en listas con el número de Tags existentes");
+        }
+
         public variables parametros(variables nuevasvar, int i)
         {
             try
@@ -166,7 +185,7 @@ namespace LSTABINT_SERV
             }
             
         }
-        public variables encabezados(variables varenca, int i)
+        public bool validaciones(variables varenca, int i)
         {
             try
             {
@@ -174,21 +193,31 @@ namespace LSTABINT_SERV
                 var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
                 string formato = "000000";
                 string[] lines = System.IO.File.ReadAllLines(varenca.VOrigen);
-                string countlines = lines.LongLength.ToString(formato);
-                countlines = countlines.Substring(countlines.Length - 6, 6);
-                countlines = Convert.ToInt32(countlines).ToString();
-                countlines = countlines.PadLeft(6, '0');
-                string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
-                foreach (var item in lines)
+                var countlines = lines.LongLength.ToString(formato);
+
+                if (CountValidation(lines.LongLength))
                 {
-                    item.Trim();
+                    countlines = countlines.Substring(countlines.Length - 6, 6);
+                    countlines = Convert.ToInt32(countlines).ToString();
+                    countlines = countlines.PadLeft(6, '0');
+                    string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
+                    foreach (var item in lines)
+                    {
+                        item.Trim();
+                    }
+                    string[] header = new string[1] { encabezados };
+                    File.Delete(varenca.VOrigen);
+                    File.AppendAllLines(varenca.VOrigen, header);
+                    File.AppendAllLines(varenca.VOrigen, lines);
+                    MoverLstabint(varenca, i);
+                    return true;
                 }
-                string[] header = new string[1] { encabezados };
-                File.Delete(varenca.VOrigen);
-                File.AppendAllLines(varenca.VOrigen, header);
-                File.AppendAllLines(varenca.VOrigen, lines);
-                MoverLstabint(varenca, i);
-                return varenca;
+                else
+                {
+                    File.Delete(varenca.VOrigen);
+                    return false;
+                }
+
             }
             catch (Exception Ex)
             {
@@ -196,6 +225,27 @@ namespace LSTABINT_SERV
                 throw;
             }
             
+        }
+
+
+        public bool CountValidation(long ListaCount)
+        {
+            string consulta = "select count(*) from Tags";
+
+            SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework;");
+
+            SqlCommand Command = new SqlCommand(consulta, SQLConn);
+
+            long resultado = (long) Command.ExecuteScalar();
+
+            if (resultado == ListaCount)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void MoverLstabint(variables var, int i)
