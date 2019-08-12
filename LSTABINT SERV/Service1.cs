@@ -81,7 +81,7 @@ namespace LSTABINT_SERV
         {
             try
             {
-
+                tmGenera.Enabled = false;
                 if (!Conexion())
                 {
                     MessageBox.Show("La conexión al servidor ha fallado", "Error", MessageBoxButtons.OK);
@@ -236,7 +236,7 @@ namespace LSTABINT_SERV
                     }
                 }
             }
-            catch (Exception Ex)
+          catch (Exception Ex)
             {
                 File.WriteAllText(@"C:\temporal\Error" + var.extension + ".txt", Ex.Message);
                 throw;
@@ -262,9 +262,9 @@ namespace LSTABINT_SERV
             {
                 Directory.CreateDirectory(LstabintPath);
             }
-            actualpath = LstabintPath + actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
-            File.Move(actualpath, LstabintPath + actualpath);
-            return actualpath;
+            LstabintPath += actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
+            File.Move(actualpath, LstabintPath);
+            return LstabintPath;
         }
 
         public void archivonormal(variables variableslistas, int i)

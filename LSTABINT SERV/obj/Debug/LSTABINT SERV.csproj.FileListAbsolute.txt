@@ -128,3 +128,4 @@ C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
