@@ -236,9 +236,9 @@ namespace LSTABINT_SERV
 
             SqlCommand Command = new SqlCommand(consulta, SQLConn);
 
-            long resultado = (long) Command.ExecuteScalar();
+            var resultado = Command.ExecuteScalar();
 
-            if (resultado == ListaCount)
+            if (Convert.ToInt32(resultado) == ListaCount)
             {
                 return true;
             }
@@ -313,6 +313,12 @@ namespace LSTABINT_SERV
                 Directory.CreateDirectory(LstabintPath);
             }
             actualpath = LstabintPath + actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
+
+            if (File.Exists(actualpath))
+            {
+                File.Delete(actualpath);
+            }
+
             File.Move(actualpath, LstabintPath + actualpath);
             return actualpath;
         }
