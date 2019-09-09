@@ -140,7 +140,10 @@ C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramewor
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\bin\Debug\Telegram.Bot.xml
+<<<<<<< HEAD
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+=======
+>>>>>>> 21bbfc52040b29fee3964685b59e3fedf55ac757
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.GenerateResource.cache
@@ -150,3 +153,4 @@ C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
 C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
+C:\Users\Usuario\Desktop\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
