@@ -24,6 +24,8 @@ namespace LSTABINT_SERV
         private System.Timers.Timer tmGenera = null;
         private static readonly TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
         private GTDBEntities db = new GTDBEntities();
+        string[] TamañoLista = new string[2];
+
         public LSTABINTSERVICE()
         {
             InitializeComponent();
@@ -84,7 +86,7 @@ namespace LSTABINT_SERV
         {
             try
             {
-
+                tmGenera.Enabled = false;
                 if (!Conexion())
                 {
                     MessageBox.Show("La conexión al servidor ha fallado", "Error", MessageBoxButtons.OK);
@@ -93,7 +95,6 @@ namespace LSTABINT_SERV
                 else
                 {
                     bool Validado = false;
-                    var TamañoLista = new string[2];
                     foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
                         File.Delete(item);
@@ -106,7 +107,6 @@ namespace LSTABINT_SERV
                         Validado = validaciones(varparametros, i);
                         if (Validado)
                         {
-                            TamañoLista[i] = new FileInfo(varparametros.VDestino + varparametros.extension).Length.ToString();
                             db.HistoricoListas.Add(new HistoricoListas
                             {
                                 Fecha_Creacion = DateTime.Now,
@@ -133,7 +133,7 @@ namespace LSTABINT_SERV
                     }
                     else
                     {
-
+                        CheckServiceTags();
                     }
                 }
             }
@@ -234,16 +234,20 @@ namespace LSTABINT_SERV
 
             SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework;");
 
+            SQLConn.Open();
+
             SqlCommand Command = new SqlCommand(consulta, SQLConn);
 
             var resultado = Command.ExecuteScalar();
 
-            if (Convert.ToInt32(resultado) == ListaCount)
+            if (ListaCount == Convert.ToInt32(resultado))
             {
+                SQLConn.Close();
                 return true;
             }
             else
             {
+                SQLConn.Close();
                 return false;
             }
         }
@@ -258,12 +262,14 @@ namespace LSTABINT_SERV
                     if (!File.Exists(var.VDestino + var.extension))
                     {
                         nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+                        TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
                         File.Copy(nuevoorigen, var.VDestino + var.extension);
                     }
                     else
                     {
                         File.Delete(var.VDestino + var.extension);
                         nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+                        TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
                         File.Copy(nuevoorigen, var.VDestino + var.extension);
                     }
                 }
@@ -286,7 +292,7 @@ namespace LSTABINT_SERV
                     }
                 }
             }
-            catch (Exception Ex)
+          catch (Exception Ex)
             {
                 File.WriteAllText(@"C:\temporal\Error" + var.extension + ".txt", Ex.Message);
                 throw;
@@ -312,15 +318,16 @@ namespace LSTABINT_SERV
             {
                 Directory.CreateDirectory(LstabintPath);
             }
-            actualpath = LstabintPath + actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
 
-            if (File.Exists(actualpath))
+            LstabintPath += actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
+
+            if (File.Exists(LstabintPath))
             {
-                File.Delete(actualpath);
+                File.Delete(LstabintPath);
             }
 
-            File.Move(actualpath, LstabintPath + actualpath);
-            return actualpath;
+            File.Move(actualpath, LstabintPath);
+            return LstabintPath;
         }
 
         public void archivonormal(variables variableslistas, int i)
