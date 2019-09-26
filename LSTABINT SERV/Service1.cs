@@ -22,75 +22,63 @@ namespace LSTABINT_SERV
     public partial class LSTABINTSERVICE : ServiceBase
     {
         private System.Timers.Timer tmGenera = null;
+        SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
         private static readonly TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
-        private GTDBEntities db = new GTDBEntities();
+        private GTDBEntities1 db = new GTDBEntities1();
         string[] TamañoLista = new string[2];
 
         public LSTABINTSERVICE()
         {
             InitializeComponent();
-            //    if (!System.Diagnostics.EventLog.SourceExists("MySource"))
-            //    {
-            //        System.Diagnostics.EventLog.CreateEventSource("MySource", "MyNewLog");
-            //    }
-            //    eventLog1.Source = "MySource";
-            //    eventLog1.Log = "MyNewLog";
         }
         protected override void OnStart(string[] args)
         {
-
-            tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 300000;
-            tmGenera.Elapsed += TmGenera_Elapsed;
+            tmGenera = new System.Timers.Timer
+            {
+                Interval = 300000
+            };
+            tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
             tmGenera.Enabled = true;
             tmGenera.Start();
         }
         public void Inicio()
         {
-            //eventLog1.WriteEntry("Termine");
-
-            tmGenera = new System.Timers.Timer();
-            tmGenera.Interval = 10000;
-            tmGenera.Elapsed += TmGenera_Elapsed;
+            tmGenera = new System.Timers.Timer
+            {
+                Interval = 10000
+            };
+            tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed); 
             tmGenera.Enabled = true;
             tmGenera.Start();
         }
         private void TmGenera_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             tmGenera.Enabled = false;
+            tmGenera.Stop();
             GeneraArchivo();
         }
         public bool Conexion()
         {
-            try
-            {
-                Ping ping = new Ping();
-                PingReply pingReply = ping.Send("10.1.10.111");
-                //PingReply pingReply = ping.Send("192.168.0.69");
-                if (pingReply.Status == IPStatus.Success)
-                {
-
-                    return true;
-                }
-                else
-                    return false;
-            }
-            catch (Exception Ex)
-            {
-                tmGenera.Enabled = true;
-                File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message);
-                return false;
-            }
+            Ping ping = new Ping();
+            PingReply pingReply = ping.Send("10.1.10.111");
+            //PingReply pingReply = ping.Send("192.168.0.69");
+            if (pingReply.Status == IPStatus.Success)
+                return true;
+            else
+                return true;
         }
         private void GeneraArchivo()
         {
             try
             {
-                tmGenera.Enabled = false;
+                variables varparametros2 = new variables();
+                CreateLSTABINT(varparametros2, 0);
                 if (!Conexion())
                 {
-                    MessageBox.Show("La conexión al servidor ha fallado", "Error", MessageBoxButtons.OK);
-                    Inicio();
+                    SendMessage("La conexión al servidor ha fallado");
+                    File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", "La conexión al servidor ha fallado");
+                    tmGenera.Enabled = true;
+                    tmGenera.Start();
                 }
                 else
                 {
@@ -102,9 +90,10 @@ namespace LSTABINT_SERV
                     for (int i = 0; i < 2; i++)
                     {
                         variables varparametros = new variables();
-                        varparametros = parametros(varparametros, i);
-                        archivonormal(varparametros, i);
-                        Validado = validaciones(varparametros, i);
+                        varparametros = GetParametros(varparametros, i);
+                        CreateLSTABINT(varparametros, i);
+                        Validado = Validaciones(varparametros, i);
+
                         if (Validado)
                         {
                             db.HistoricoListas.Add(new HistoricoListas
@@ -114,133 +103,101 @@ namespace LSTABINT_SERV
                                 Extension = varparametros.extension,
                                 Tipo = i == 0 ? "MultiModal" : "Exclusivo"
                             });
-                            varparametros.Equals(null);
-                        }
-                    }
-                    if (Validado)
-                    {
-                        var listas = db.Parametrizables.ToList();
-                        foreach (var item in listas)
-                        {
-                            item.extension++;
-                            if (item.extension > 999)
+                            var listas = db.Parametrizables.ToArray();
+                            listas[i].extension++;
+                            if (listas[i].extension > 999)
                             {
-                                item.extension = 1;
+                                listas[i].extension = 1;
                             }
                         }
-                        db.SaveChanges();
-                        tmGenera.Enabled = true;
+                        else
+                        {
+                            SendMessage("No coincide el número de tags en listas con el número de Tags existentes");
+                        }
                     }
-                    else
-                    {
-                        CheckServiceTags();
-                    }
+                    db.SaveChanges();
+                    tmGenera.Enabled = true;
+                    tmGenera.Start();
                 }
             }
             catch (Exception Ex)
             {
+                string ErrorPath = @"C:\temporal\Errores\LSTABINT\";
+                string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
+                ErrorPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0] + @"\";
+                CreateDirectory(ErrorPath);
+
+                File.WriteAllText(ErrorPath + "Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message + Ex.StackTrace);
+                SendMessage("Ocurrió un error en la generación de la LSTABINT." + db.Parametrizables.FirstOrDefault().extension + ": "+ Ex.Message);
+
                 tmGenera.Enabled = true;
-                //MessageBox.Show(Ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message);
+                tmGenera.Start();
             }
 
         }
         protected override void OnStop()
         {
-            tmGenera.Stop();
-
-            //EventLog.WriteEntry("El servicio se ha detenido");
+            //SendMessage("LSTABINT Service se detuvo");
+            File.WriteAllText(@"C:\temporal\Stop.txt", "Se detuvo");
         }
 
-        public async void CheckServiceTags()
+        public variables GetParametros(variables nuevasvar, int i)
         {
-            await Bot.SendTextMessageAsync(-364639169, "No coincide el número de tags en listas con el número de Tags existentes");
+            var parametrizable = db.Parametrizables.ToList();
+            if (parametrizable.Count == 2)
+            {
+                nuevasvar.VOrigen = parametrizable[i].origen;
+                nuevasvar.VDestino = parametrizable[i].destino;
+                nuevasvar.extension = parametrizable[i].extension.ToString();
+                char[] prueba = nuevasvar.extension.ToCharArray();
+                nuevasvar.extension = nuevasvar.extension.PadLeft(3, '0');
+            }
+            else
+            {
+                SendMessage("El número de registros en la tabla Parametrizable es diferemte a 2");
+            }
+            CreateDirectory(nuevasvar.VOrigen);
+            nuevasvar.VOrigen = nuevasvar.VOrigen + nuevasvar.extension;
+            return nuevasvar;
         }
-
-        public variables parametros(variables nuevasvar, int i)
+        public bool Validaciones(variables varenca, int i)
         {
-            try
-            {
-                var parametrizable = db.Parametrizables.ToList();
-                if (parametrizable.Count == 2)
-                {
-                    nuevasvar.VOrigen = parametrizable[i].origen;
-                    nuevasvar.VDestino = parametrizable[i].destino;
-                    nuevasvar.extension = parametrizable[i].extension.ToString();
-                    char[] prueba = nuevasvar.extension.ToCharArray();
-                    nuevasvar.extension = nuevasvar.extension.PadLeft(3, '0');
-                }
-                bool exists = System.IO.Directory.Exists(nuevasvar.VOrigen);
-                if (!exists)
-                {
-                    System.IO.Directory.CreateDirectory(nuevasvar.VOrigen);
-                }
-                nuevasvar.VOrigen = nuevasvar.VOrigen + nuevasvar.extension;
-                return nuevasvar;
-            }
-            catch (Exception Ex)
-            {
-                File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message);
-                throw;
-            }
-            
-        }
-        public bool validaciones(variables varenca, int i)
-        {
-            try
-            {
-                var aplicationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
-                var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
-                string formato = "000000";
-                string[] lines = System.IO.File.ReadAllLines(varenca.VOrigen);
-                var countlines = lines.LongLength.ToString(formato);
+            var aplicationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
+            var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
+            string formato = "000000";
+            string[] lines = System.IO.File.ReadAllLines(varenca.VOrigen);
+            var countlines = lines.LongLength.ToString(formato);
 
-                if (CountValidation(lines.LongLength))
-                {
-                    countlines = countlines.Substring(countlines.Length - 6, 6);
-                    countlines = Convert.ToInt32(countlines).ToString();
-                    countlines = countlines.PadLeft(6, '0');
-                    string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
-                    foreach (var item in lines)
-                    {
-                        item.Trim();
-                    }
-                    string[] header = new string[1] { encabezados };
-                    File.Delete(varenca.VOrigen);
-                    File.AppendAllLines(varenca.VOrigen, header);
-                    File.AppendAllLines(varenca.VOrigen, lines);
-                    MoverLstabint(varenca, i);
-                    return true;
-                }
-                else
-                {
-                    File.Delete(varenca.VOrigen);
-                    return false;
-                }
-
-            }
-            catch (Exception Ex)
+            if (CountValidation(lines.LongLength))
             {
-                File.WriteAllText(@"C:\temporal\Error" + varenca.extension + ".txt", Ex.Message);
-                throw;
+                countlines = countlines.Substring(countlines.Length - 6, 6);
+                countlines = Convert.ToInt32(countlines).ToString();
+                countlines = countlines.PadLeft(6, '0');
+                string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
+                foreach (var item in lines)
+                {
+                    item.Trim();
+                }
+                string[] header = new string[1] { encabezados };
+                File.Delete(varenca.VOrigen);
+                File.AppendAllLines(varenca.VOrigen, header);
+                File.AppendAllLines(varenca.VOrigen, lines);
+                MoverLstabint(varenca, i);
+                return true;
             }
-            
+            else
+            {
+                File.Delete(varenca.VOrigen);
+                return false;
+            }
         }
 
 
         public bool CountValidation(long ListaCount)
         {
-            string consulta = "select count(*) from Tags";
+            long TagsCount = db.Tags.Count();
 
-            SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework;");
-
-            SQLConn.Open();
-
-            SqlCommand Command = new SqlCommand(consulta, SQLConn);
-
-            var resultado = Command.ExecuteScalar();
-
-            if (ListaCount == Convert.ToInt32(resultado))
+            if (ListaCount == TagsCount)
             {
                 SQLConn.Close();
                 return true;
@@ -254,50 +211,19 @@ namespace LSTABINT_SERV
 
         private void MoverLstabint(variables var, int i)
         {
-            try
+            string nuevoorigen;
+            if (i == 1)
             {
-                string nuevoorigen;
-                if (i == 0)
+                foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
                 {
-                    if (!File.Exists(var.VDestino + var.extension))
-                    {
-                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
-                        TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
-                        File.Copy(nuevoorigen, var.VDestino + var.extension);
-                    }
-                    else
-                    {
-                        File.Delete(var.VDestino + var.extension);
-                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
-                        TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
-                        File.Copy(nuevoorigen, var.VDestino + var.extension);
-                    }
-                }
-                else
-                {
-                    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
-                    {
-                        File.Delete(item);
-                    }
-                    if (!File.Exists(var.VDestino))
-                    {
-                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
-                        File.Copy(nuevoorigen, var.VDestino + var.extension);
-                    }
-                    else
-                    {
-                        File.Delete(var.VDestino + var.extension);
-                        nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
-                        File.Copy(nuevoorigen, var.VDestino + var.extension);
-                    }
+                    File.Delete(item);
                 }
             }
-          catch (Exception Ex)
-            {
-                File.WriteAllText(@"C:\temporal\Error" + var.extension + ".txt", Ex.Message);
-                throw;
-            }
-
+            if (File.Exists(var.VDestino + var.extension))
+                File.Delete(var.VDestino + var.extension);
+            nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+            TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
+            File.Copy(nuevoorigen, var.VDestino + var.extension);
         }
 
         public string GuardarLSTABINT(string actualpath, int i)
@@ -305,7 +231,7 @@ namespace LSTABINT_SERV
             string LstabintPath;
             if (i == 0)
             {
-                 LstabintPath = @"C:\temporal\LSTABINT\";
+                LstabintPath = @"C:\temporal\LSTABINT\";
             }
             else
             {
@@ -314,10 +240,7 @@ namespace LSTABINT_SERV
             string dia = DateTime.Now.ToString("dd MMMM yyyy");
             string[] ArrayFecha = dia.Split(' ');
             LstabintPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0];
-            if (!Directory.Exists(LstabintPath))
-            {
-                Directory.CreateDirectory(LstabintPath);
-            }
+            CreateDirectory(LstabintPath);
 
             LstabintPath += actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
 
@@ -330,30 +253,36 @@ namespace LSTABINT_SERV
             return LstabintPath;
         }
 
-        public void archivonormal(variables variableslistas, int i)
+        public void CreateLSTABINT(variables variableslistas, int i)
         {
-            try
+            string final = "\\0'";
+            string consulta;
+
+            SQLConn.Open();
+            if (i == 0)
+                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
+
+            else
+                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
+
+            var cmd = new SqlCommand(consulta, SQLConn);
+            cmd.CommandTimeout = 3 * 60;
+            cmd.ExecuteNonQuery();
+            SQLConn.Close();
+        }
+
+        public async void SendMessage(string Mensaje)
+        {
+            await Bot.SendTextMessageAsync(-364639169, Mensaje);
+        }
+
+        public void CreateDirectory(string Directory)
+        {
+            bool Exists = System.IO.Directory.Exists(Directory);
+            if (!Exists)
             {
-                string query = "data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
-                var conexion = new SqlConnection();
-                conexion.ConnectionString = query;
-                conexion.Open();
-                string final = "\\0'";
-                string consulta;
-                if (i == 0)
-                    consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
-                else
-                    consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
-                var cmd = new SqlCommand(consulta, conexion);
-                cmd.CommandTimeout = 3 * 60;
-                cmd.ExecuteNonQuery();
+                System.IO.Directory.CreateDirectory(Directory);
             }
-            catch (Exception Ex)
-            {
-                File.WriteAllText(@"C:\temporal\Error" + variableslistas.extension + ".txt", Ex.Message);
-                throw;
-            }
-           
         }
     }
 }

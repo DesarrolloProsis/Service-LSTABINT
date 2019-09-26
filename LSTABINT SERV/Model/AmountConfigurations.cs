@@ -12,17 +12,10 @@ namespace LSTABINT_SERV.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Tags
+    public partial class AmountConfigurations
     {
-        public long Id { get; set; }
-        public string NumTag { get; set; }
-        public string SaldoTag { get; set; }
-        public bool StatusTag { get; set; }
-        public bool StatusResidente { get; set; }
-        public System.DateTime DateTTag { get; set; }
-        public long CuentaId { get; set; }
-        public string IdCajero { get; set; }
-    
-        public virtual CuentasTelepeajes CuentasTelepeajes { get; set; }
+        public string Concept { get; set; }
+        public short Type { get; set; }
+        public double Amount { get; set; }
     }
 }

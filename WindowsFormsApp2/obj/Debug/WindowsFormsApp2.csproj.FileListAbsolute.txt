@@ -145,3 +145,39 @@ C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Net.
 C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Algorithms.dll
 C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Encoding.dll
 C:\Users\Usuario\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Net.Http.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Telegram.Bot.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Telegram.Bot.xml
+C:\Users\Rodrigo\Desktop\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe.config
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.pdb
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.exe
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Net.Http.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Telegram.Bot.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.pdb
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.xml
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Telegram.Bot.xml
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csprojAssemblyReference.cache
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Form1.resources
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResource.cache
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CopyComplete
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb

@@ -143,6 +143,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AmountConfigurations.cs">
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\AppDbContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -159,52 +162,67 @@
       <DependentUpon>AppDbContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\AspNetRoles.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AspNetUserClaims.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AspNetUserLogins.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AspNetUsers.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Clientes.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CortesCajeroes.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CuentasTelepeajes.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\C__MigrationHistory.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Historico.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\HistoricoListas.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ListaNegra.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalDBEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalDBEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalDBEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LocalDBEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalDBEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\MontosRecargables.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\OperacionesCajeroes.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\OperacionesSerBIpagos.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Parametrizables.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Tags.cs">
-      <DependentUpon>AppDbContext.tt</DependentUpon>
+      <DependentUpon>LocalDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -233,6 +251,23 @@
     </EntityDeploy>
     <None Include="Model\AppDbContext.edmx.diagram">
       <DependentUpon>AppDbContext.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model\LocalDBEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LocalDBEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\LocalDBEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LocalDBEntities.edmx</DependentUpon>
+      <LastGenOutput>LocalDBEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model\LocalDBEntities.edmx.diagram">
+      <DependentUpon>LocalDBEntities.edmx</DependentUpon>
+    </None>
+    <None Include="Model\LocalDBEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LocalDBEntities.edmx</DependentUpon>
+      <LastGenOutput>LocalDBEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

@@ -22,12 +22,9 @@ namespace LSTABINT_SERV.Model
         public Nullable<double> SaldoActual { get; set; }
         public bool StatusOperacion { get; set; }
         public System.DateTime DateTOpSerBI { get; set; }
-        public long TagId { get; set; }
         public string Numero { get; set; }
         public string NoReferencia { get; set; }
         public string Tipo { get; set; }
         public string Concepto { get; set; }
-    
-        public virtual Tags Tags { get; set; }
     }
 }
