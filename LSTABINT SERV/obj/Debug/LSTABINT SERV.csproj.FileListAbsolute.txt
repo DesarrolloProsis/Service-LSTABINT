@@ -12,7 +12,6 @@ C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Co
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Globalization.Calendars.dll
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.IO.Compression.dll
-C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.IO.Compression.ZipFile.dll
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.IO.FileSystem.dll
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.IO.FileSystem.Primitives.dll
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Net.Http.dll
@@ -38,3 +37,4 @@ C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT 
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.csprojAssemblyReference.cache
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\LSTABINT SERV\bin\Debug\Ionic.Zip.dll

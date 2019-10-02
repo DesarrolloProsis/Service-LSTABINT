@@ -66,6 +66,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Ionic.Zip.dll" size="462336">
+      <assemblyIdentity name="Ionic.Zip" version="1.9.1.8" publicKeyToken="EDBE51AD942A3F5C" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Oz5UFoLkjz/Shy+FoGJ42i8+eHfulW2om5DXMqHqoL0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="159216">
       <assemblyIdentity name="LSTABINT SERV" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -73,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>r3cBkhZryZ9mRIj/P4LxX+m4nWDL53RreiUwPJuf8iM=</dsig:DigestValue>
+        <dsig:DigestValue>lbHnld6E9Szt101lxC/rWFVVgYLK8cQipIszlKvi2bo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -158,18 +170,6 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>nWIWYx0ZKogcFw+6QTWZ9seUQvoekzwgAFMERNIHUi0=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.IO.Compression.ZipFile.dll" size="24824">
-      <assemblyIdentity name="System.IO.Compression.ZipFile" version="4.0.1.0" publicKeyToken="B77A5C561934E089" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gINPD7onHzjINjiqbJdXffX7VNCICWoJVWh1RyNWEaM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

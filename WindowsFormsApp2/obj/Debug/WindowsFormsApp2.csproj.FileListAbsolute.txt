@@ -181,3 +181,4 @@ C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\Window
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CopyComplete
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
 C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+C:\Users\Rodrigo\source\repos\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Ionic.Zip.dll

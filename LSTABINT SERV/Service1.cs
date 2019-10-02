@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.DirectoryServices;
-using System.Security;
 using LSTABINT_SERV.Model;
-using System.Data.Common;
 using Telegram.Bot;
+using Ionic.Zip;
+using System.Threading;
+
 
 namespace LSTABINT_SERV
 {
@@ -26,6 +20,7 @@ namespace LSTABINT_SERV
         private static readonly TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
         private GTDBEntities1 db = new GTDBEntities1();
         string[] TamañoLista = new string[2];
+        bool Validado = false;
 
         public LSTABINTSERVICE()
         {
@@ -47,7 +42,7 @@ namespace LSTABINT_SERV
             {
                 Interval = 10000
             };
-            tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed); 
+            tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
             tmGenera.Enabled = true;
             tmGenera.Start();
         }
@@ -55,34 +50,41 @@ namespace LSTABINT_SERV
         {
             tmGenera.Enabled = false;
             tmGenera.Stop();
-            GeneraArchivo();
+
+            var task = Task.Run(() => GeneraArchivo());
+            if (!task.Wait(TimeSpan.FromMinutes(5)))
+                throw new Exception("Timed out");
         }
         public bool Conexion()
         {
-            Ping ping = new Ping();
-            PingReply pingReply = ping.Send("10.1.10.111");
-            //PingReply pingReply = ping.Send("192.168.0.69");
-            if (pingReply.Status == IPStatus.Success)
-                return true;
-            else
-                return true;
+            try
+            {
+                Ping ping = new Ping();
+                PingReply pingReply = ping.Send("10.1.10.111");
+                //PingReply pingReply = ping.Send("192.168.0.69");
+                if (pingReply.Status == IPStatus.Success)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         private void GeneraArchivo()
         {
             try
             {
-                variables varparametros2 = new variables();
-                CreateLSTABINT(varparametros2, 0);
                 if (!Conexion())
                 {
-                    SendMessage("La conexión al servidor ha fallado");
                     File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", "La conexión al servidor ha fallado");
+                    SendMessage("La conexión al servidor ha fallado");
                     tmGenera.Enabled = true;
                     tmGenera.Start();
                 }
                 else
                 {
-                    bool Validado = false;
                     foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
                         File.Delete(item);
@@ -128,7 +130,7 @@ namespace LSTABINT_SERV
                 CreateDirectory(ErrorPath);
 
                 File.WriteAllText(ErrorPath + "Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message + Ex.StackTrace);
-                SendMessage("Ocurrió un error en la generación de la LSTABINT." + db.Parametrizables.FirstOrDefault().extension + ": "+ Ex.Message);
+                SendMessage("Ocurrió un error en la generación de la LSTABINT." + db.Parametrizables.FirstOrDefault().extension + ": " + Ex.Message);
 
                 tmGenera.Enabled = true;
                 tmGenera.Start();
@@ -138,7 +140,7 @@ namespace LSTABINT_SERV
         protected override void OnStop()
         {
             //SendMessage("LSTABINT Service se detuvo");
-            File.WriteAllText(@"C:\temporal\Stop.txt", "Se detuvo");
+            File.WriteAllText(@"C:\temporal\LSTABINTSERVStopped.txt", "Se detuvo");
         }
 
         public variables GetParametros(variables nuevasvar, int i)
@@ -212,18 +214,19 @@ namespace LSTABINT_SERV
         private void MoverLstabint(variables var, int i)
         {
             string nuevoorigen;
-            if (i == 1)
-            {
-                foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
-                {
-                    File.Delete(item);
-                }
-            }
+            //if (i == 1)
+            //{
+            //    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
+            //    {
+            //        File.Delete(item);
+            //    }
+            //}
             if (File.Exists(var.VDestino + var.extension))
                 File.Delete(var.VDestino + var.extension);
             nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
             TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
-            File.Copy(nuevoorigen, var.VDestino + var.extension);
+            //File.Copy(nuevoorigen, var.VDestino + var.extension);
+            File.Delete(nuevoorigen);
         }
 
         public string GuardarLSTABINT(string actualpath, int i)
@@ -245,11 +248,16 @@ namespace LSTABINT_SERV
             LstabintPath += actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
 
             if (File.Exists(LstabintPath))
-            {
                 File.Delete(LstabintPath);
-            }
-
+            else if (File.Exists(LstabintPath + ".zip"))           
+                File.Delete(LstabintPath + ".zip");
+            
             File.Move(actualpath, LstabintPath);
+
+            ZipFile zips = new ZipFile();
+            zips.AddFile(LstabintPath);
+            zips.Save(LstabintPath + ".zip");
+
             return LstabintPath;
         }
 
