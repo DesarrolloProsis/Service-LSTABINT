@@ -16,36 +16,40 @@ namespace LSTABINT_SERV
     public partial class LSTABINTSERVICE : ServiceBase
     {
         private System.Timers.Timer tmGenera = null;
-        SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
-        private static readonly TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
         private GTDBEntities1 db = new GTDBEntities1();
         string[] TamañoLista = new string[2];
-        bool Validado = false;
 
         public LSTABINTSERVICE()
         {
             InitializeComponent();
         }
+        public void Inicio() //Evento para probar desde Windows Form
+        {
+            tmGenera = new System.Timers.Timer
+            {
+                Interval = 10000 //10 segundos
+            };
+            tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
+            tmGenera.Enabled = true;
+            tmGenera.Start();
+        }
         protected override void OnStart(string[] args)
         {
             tmGenera = new System.Timers.Timer
             {
-                Interval = 300000
+                Interval = 300000 //5 minutos = 300 segundos
             };
             tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
             tmGenera.Enabled = true;
             tmGenera.Start();
         }
-        public void Inicio()
+
+        protected override void OnStop()
         {
-            tmGenera = new System.Timers.Timer
-            {
-                Interval = 10000
-            };
-            tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
-            tmGenera.Enabled = true;
-            tmGenera.Start();
+            File.WriteAllText(@"C:\temporal\LSTABINTSERVStopped.txt", "Se detuvo");
+            SendMessage("LSTABINT Service se detuvo");
         }
+
         private void TmGenera_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             tmGenera.Enabled = false;
@@ -53,7 +57,7 @@ namespace LSTABINT_SERV
 
             var task = Task.Run(() => GeneraArchivo());
             if (!task.Wait(TimeSpan.FromMinutes(5)))
-                throw new Exception("Timed out");
+                SendMessage("La generación de una LSTABINT tardó demasiado, se recomienda checar la conexión SQL");
         }
         public bool Conexion()
         {
@@ -78,10 +82,7 @@ namespace LSTABINT_SERV
             {
                 if (!Conexion())
                 {
-                    File.WriteAllText(@"C:\temporal\Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", "La conexión al servidor ha fallado");
                     SendMessage("La conexión al servidor ha fallado");
-                    tmGenera.Enabled = true;
-                    tmGenera.Start();
                 }
                 else
                 {
@@ -91,10 +92,13 @@ namespace LSTABINT_SERV
                     }
                     for (int i = 0; i < 2; i++)
                     {
+                        bool Validado = false;
+                        Parametrizables Parametros = new Parametrizables();
                         variables varparametros = new variables();
-                        varparametros = GetParametros(varparametros, i);
-                        CreateLSTABINT(varparametros, i);
-                        Validado = Validaciones(varparametros, i);
+
+                        Parametros = GetParametros(i);
+                        CreateLSTABINT(Parametros, i);
+                        Validado = Validaciones(Parametros, i);
 
                         if (Validado)
                         {
@@ -102,7 +106,7 @@ namespace LSTABINT_SERV
                             {
                                 Fecha_Creacion = DateTime.Now,
                                 Tamaño = TamañoLista[i] + " KB",
-                                Extension = varparametros.extension,
+                                Extension = Parametros.extension.ToString("D3"),
                                 Tipo = i == 0 ? "MultiModal" : "Exclusivo"
                             });
                             var listas = db.Parametrizables.ToArray();
@@ -117,10 +121,12 @@ namespace LSTABINT_SERV
                             SendMessage("No coincide el número de tags en listas con el número de Tags existentes");
                         }
                     }
+
                     db.SaveChanges();
-                    tmGenera.Enabled = true;
-                    tmGenera.Start();
                 }
+
+                tmGenera.Enabled = true;
+                tmGenera.Start();
             }
             catch (Exception Ex)
             {
@@ -137,59 +143,69 @@ namespace LSTABINT_SERV
             }
 
         }
-        protected override void OnStop()
+
+        public Parametrizables GetParametros(int i)
         {
-            //SendMessage("LSTABINT Service se detuvo");
-            File.WriteAllText(@"C:\temporal\LSTABINTSERVStopped.txt", "Se detuvo");
+            Parametrizables Parametros = new Parametrizables();
+            try
+            {
+                var parametrizable = db.Parametrizables.ToList();
+
+                Parametros.origen = parametrizable[i].origen;
+                Parametros.destino = parametrizable[i].destino;
+                Parametros.extension = parametrizable[i].extension;
+
+                CreateDirectory(Parametros.origen);
+                Parametros.origen = Parametros.origen + Parametros.extension.ToString("D3");
+                return Parametros;
+            }
+            catch (Exception)
+            {
+                return Parametros;
+            }
+
         }
 
-        public variables GetParametros(variables nuevasvar, int i)
+        public void CreateLSTABINT(Parametrizables Parametros, int i)
         {
-            var parametrizable = db.Parametrizables.ToList();
-            if (parametrizable.Count == 2)
-            {
-                nuevasvar.VOrigen = parametrizable[i].origen;
-                nuevasvar.VDestino = parametrizable[i].destino;
-                nuevasvar.extension = parametrizable[i].extension.ToString();
-                char[] prueba = nuevasvar.extension.ToCharArray();
-                nuevasvar.extension = nuevasvar.extension.PadLeft(3, '0');
-            }
+            string consulta;
+            SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
+
+            SQLConn.Open();
+            if (i == 0)
+                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + Parametros.origen + "\"" + " -T -c -t \\0'";
+
             else
-            {
-                SendMessage("El número de registros en la tabla Parametrizable es diferemte a 2");
-            }
-            CreateDirectory(nuevasvar.VOrigen);
-            nuevasvar.VOrigen = nuevasvar.VOrigen + nuevasvar.extension;
-            return nuevasvar;
+                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + Parametros.origen + "\"" + " -T -c -t \\0'";
+
+            var cmd = new SqlCommand(consulta, SQLConn);
+            cmd.CommandTimeout = 3 * 60;
+            cmd.ExecuteNonQuery();
+            SQLConn.Close();
         }
-        public bool Validaciones(variables varenca, int i)
+
+        public bool Validaciones(Parametrizables Parametros, int i)
         {
-            var aplicationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
             var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
-            string formato = "000000";
-            string[] lines = System.IO.File.ReadAllLines(varenca.VOrigen);
-            var countlines = lines.LongLength.ToString(formato);
+            string[] lines = System.IO.File.ReadAllLines(Parametros.origen);
+            var countlines = lines.LongLength.ToString("D6");
 
             if (CountValidation(lines.LongLength))
             {
                 countlines = countlines.Substring(countlines.Length - 6, 6);
-                countlines = Convert.ToInt32(countlines).ToString();
-                countlines = countlines.PadLeft(6, '0');
-                string encabezados = "63" + aplicationdate + creationdate + "0100" + varenca.extension + countlines;
-                foreach (var item in lines)
-                {
-                    item.Trim();
-                }
+
+                string encabezados = "63" + creationdate + creationdate + "0100" + Parametros.extension.ToString("D3") + countlines;
+
                 string[] header = new string[1] { encabezados };
-                File.Delete(varenca.VOrigen);
-                File.AppendAllLines(varenca.VOrigen, header);
-                File.AppendAllLines(varenca.VOrigen, lines);
-                MoverLstabint(varenca, i);
+                File.Delete(Parametros.origen);
+                File.AppendAllText(Parametros.origen, encabezados);
+                File.AppendAllLines(Parametros.origen, lines);
+                MoverLstabint(Parametros, i);
                 return true;
             }
             else
             {
-                File.Delete(varenca.VOrigen);
+                File.Delete(Parametros.origen);
                 return false;
             }
         }
@@ -200,59 +216,43 @@ namespace LSTABINT_SERV
             long TagsCount = db.Tags.Count();
 
             if (ListaCount == TagsCount)
-            {
-                SQLConn.Close();
                 return true;
-            }
             else
-            {
-                SQLConn.Close();
                 return false;
-            }
         }
 
-        private void MoverLstabint(variables var, int i)
+        private void MoverLstabint(Parametrizables Parametros, int i)
         {
             string nuevoorigen;
-            //if (i == 1)
-            //{
-            //    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
-            //    {
-            //        File.Delete(item);
-            //    }
-            //}
-            if (File.Exists(var.VDestino + var.extension))
-                File.Delete(var.VDestino + var.extension);
-            nuevoorigen = GuardarLSTABINT(var.VOrigen, i);
+            if (i == 1)
+            {
+                foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
+                {
+                    File.Delete(item);
+                }
+            }
+
+            nuevoorigen = GuardarLSTABINT(Parametros, i);
             TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
             //File.Copy(nuevoorigen, var.VDestino + var.extension);
             File.Delete(nuevoorigen);
         }
 
-        public string GuardarLSTABINT(string actualpath, int i)
+        public string GuardarLSTABINT(Parametrizables Parametros, int i)
         {
-            string LstabintPath;
-            if (i == 0)
-            {
-                LstabintPath = @"C:\temporal\LSTABINT\";
-            }
-            else
-            {
-                LstabintPath = @"C:\temporal\MontoMinimo\";
-            }
-            string dia = DateTime.Now.ToString("dd MMMM yyyy");
-            string[] ArrayFecha = dia.Split(' ');
+            string LstabintPath = db.Parametrizables.ToArray()[i].destinoresidente;
+            string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
             LstabintPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0];
             CreateDirectory(LstabintPath);
 
-            LstabintPath += actualpath.Substring(actualpath.Length - 13, 13);  //13 caracteres = "\LSTABINT.###"
+            LstabintPath += @"\LSTABINT." + Parametros.extension.ToString("D3"); 
 
             if (File.Exists(LstabintPath))
                 File.Delete(LstabintPath);
-            else if (File.Exists(LstabintPath + ".zip"))           
+            else if (File.Exists(LstabintPath + ".zip"))
                 File.Delete(LstabintPath + ".zip");
-            
-            File.Move(actualpath, LstabintPath);
+
+            File.Move(Parametros.origen, LstabintPath);
 
             ZipFile zips = new ZipFile();
             zips.AddFile(LstabintPath);
@@ -261,26 +261,9 @@ namespace LSTABINT_SERV
             return LstabintPath;
         }
 
-        public void CreateLSTABINT(variables variableslistas, int i)
-        {
-            string final = "\\0'";
-            string consulta;
-
-            SQLConn.Open();
-            if (i == 0)
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
-
-            else
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + variableslistas.VOrigen + "\"" + " -T -c -t" + final;
-
-            var cmd = new SqlCommand(consulta, SQLConn);
-            cmd.CommandTimeout = 3 * 60;
-            cmd.ExecuteNonQuery();
-            SQLConn.Close();
-        }
-
         public async void SendMessage(string Mensaje)
         {
+            TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
             await Bot.SendTextMessageAsync(-364639169, Mensaje);
         }
 
