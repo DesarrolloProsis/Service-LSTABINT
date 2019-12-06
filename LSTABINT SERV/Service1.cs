@@ -18,6 +18,7 @@ namespace LSTABINT_SERV
         private System.Timers.Timer tmGenera = null;
         private GTDBEntities1 db = new GTDBEntities1();
         string[] TamañoLista = new string[2];
+        string Message = string.Empty;
 
         public LSTABINTSERVICE()
         {
@@ -94,7 +95,6 @@ namespace LSTABINT_SERV
                     {
                         bool Validado = false;
                         Parametrizables Parametros = new Parametrizables();
-                        variables varparametros = new variables();
 
                         Parametros = GetParametros(i);
                         CreateLSTABINT(Parametros, i);
@@ -118,7 +118,7 @@ namespace LSTABINT_SERV
                         }
                         else
                         {
-                            SendMessage("No coincide el número de tags en listas con el número de Tags existentes");
+                            SendMessage(Message);
                         }
                     }
 
@@ -134,9 +134,10 @@ namespace LSTABINT_SERV
                 string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
                 ErrorPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0] + @"\";
                 CreateDirectory(ErrorPath);
+                string Extension = db.Parametrizables.FirstOrDefault().extension.ToString();
 
-                File.WriteAllText(ErrorPath + "Error" + db.Parametrizables.FirstOrDefault().extension + ".txt", Ex.Message + Ex.StackTrace);
-                SendMessage("Ocurrió un error en la generación de la LSTABINT." + db.Parametrizables.FirstOrDefault().extension + ": " + Ex.Message);
+                File.WriteAllText(ErrorPath + "Error" + Extension + ".txt", Ex.Message + Ex.StackTrace);
+                SendMessage("Ocurrió un error en la generación de la LSTABINT." + Extension + ". Abre el archivo Error.");
 
                 tmGenera.Enabled = true;
                 tmGenera.Start();
@@ -197,14 +198,25 @@ namespace LSTABINT_SERV
                 string encabezados = "63" + creationdate + creationdate + "0100" + Parametros.extension.ToString("D3") + countlines;
 
                 string[] header = new string[1] { encabezados };
-                File.Delete(Parametros.origen);
-                File.AppendAllText(Parametros.origen, encabezados);
-                File.AppendAllLines(Parametros.origen, lines);
-                MoverLstabint(Parametros, i);
-                return true;
+                try
+                {
+                    File.Delete(Parametros.origen);
+                    File.AppendAllText(Parametros.origen, encabezados);
+                    File.AppendAllLines(Parametros.origen, lines);
+                    MoverLstabint(Parametros, i);
+                    return true;
+                }
+                catch (Exception Ex)
+                {
+                    Message = "Hubo un problema para generar la LSTABINT." + Parametros.extension + ": " + Ex.Message;
+                    return false;
+                    throw;
+                }
+                
             }
             else
             {
+                Message = "No coincide el número de tags con el número de Tags existentes en LSTABINT." + Parametros.extension;
                 File.Delete(Parametros.origen);
                 return false;
             }
