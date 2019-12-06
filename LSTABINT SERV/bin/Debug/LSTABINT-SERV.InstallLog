@@ -1,0 +1,49 @@
+﻿Instalando ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Instalando el servicio LSTABINTSERVICE...
+Creando el origen de EventLog LSTABINTSERVICE en el registro Application...
+Deshaciendo ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Restaurando el registro de eventos al estado anterior para el origen LSTABINTSERVICE.
+Instalando ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Instalando el servicio LSTABINTSERVICE...
+Creando el origen de EventLog LSTABINTSERVICE en el registro Application...
+Deshaciendo ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Restaurando el registro de eventos al estado anterior para el origen LSTABINTSERVICE.
+Instalando ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Deshaciendo ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Instalando ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe
+Instalando el servicio LSTABINTSERVICE...
+El servicio LSTABINTSERVICE se ha instalado correctamente.
+Creando el origen de EventLog LSTABINTSERVICE en el registro Application...
+Confirmando ensamblado 'C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe'.
+Los parámetros afectados son:
+   logtoconsole = 
+   logfile = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.InstallLog
+   assemblypath = C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT-SERV.exe

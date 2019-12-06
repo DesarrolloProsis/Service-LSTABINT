@@ -1,0 +1,37 @@
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe.manifest
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.application
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.exe
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\LSTABINT SERV.pdb
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\Ionic.Zip.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\Microsoft.Win32.Primitives.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.AppContext.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Console.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Globalization.Calendars.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.IO.FileSystem.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.IO.FileSystem.Primitives.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Net.Http.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Net.Sockets.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\Telegram.Bot.dll
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.xml
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\bin\Debug\Telegram.Bot.xml
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT_SERV.ProjectInstaller.resources
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT_SERV.LSTABINTSERVICE.resources
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT-SERV.csproj.GenerateResource.cache
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe.manifest
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.application
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT-SERV.csproj.CopyComplete
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.exe
+C:\Users\Desarrollo_Mike\source\repos\PROSIS\Service-LSTABINT\LSTABINT SERV\obj\Debug\LSTABINT SERV.pdb
