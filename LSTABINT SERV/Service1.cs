@@ -63,50 +63,65 @@ namespace LSTABINT_SERV
 
         private void GeneraArchivo()
         {
-            if (!Conexion())
+            try
             {
-                SendMessage("La conexión al servidor ha fallado");
-            }
-            else
-            {
-                foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
+                if (!Conexion())
                 {
-                    File.Delete(item);
+                    SendMessage("La conexión al servidor ha fallado");
                 }
-                for (int i = 0; i < 2; i++)
+                else
                 {
-                    bool Validado = false;
-                    Parametrizables Parametros = new Parametrizables();
-
-                    Parametros = GetParametros(i);
-                    CreateLSTABINT(Parametros, i);
-                    Validado = Validaciones(Parametros, i);
-
-                    if (Validado)
+                    foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
-                        db.HistoricoListas.Add(new HistoricoListas
+                        File.Delete(item);
+                    }
+                    for (int i = 0; i < 2; i++)
+                    {
+                        bool Validado = false;
+                        Parametrizables Parametros = new Parametrizables();
+
+                        Parametros = GetParametros(i);
+                        CreateLSTABINT(Parametros, i);
+                        Validado = Validaciones(Parametros, i);
+
+                        if (Validado)
                         {
-                            Fecha_Creacion = DateTime.Now,
-                            Tamaño = TamañoLista[i] + " KB",
-                            Extension = Parametros.extension.ToString("D3"),
-                            Tipo = i == 0 ? "MultiModal" : "Exclusivo"
-                        });
-                        var listas = db.Parametrizables.ToArray();
-                        listas[i].extension++;
-                        if (listas[i].extension > 999)
+                            db.HistoricoListas.Add(new HistoricoListas
+                            {
+                                Fecha_Creacion = DateTime.Now,
+                                Tamaño = TamañoLista[i] + " KB",
+                                Extension = Parametros.extension.ToString("D3"),
+                                Tipo = i == 0 ? "MultiModal" : "Exclusivo"
+                            });
+                            var listas = db.Parametrizables.ToArray();
+                            listas[i].extension++;
+                            if (listas[i].extension > 999)
+                            {
+                                listas[i].extension = 1;
+                            }
+                        }
+                        else
                         {
-                            listas[i].extension = 1;
+                            SendMessage(Message);
                         }
                     }
-                    else
-                    {
-                        SendMessage(Message);
-                    }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+                tmGenera.Enabled = true;
+                tmGenera.Start();
             }
-            tmGenera.Enabled = true;
-            tmGenera.Start();
+            catch (Exception Ex)
+            {
+                string ErrorPath = @"C:\temporal\Errores\LSTABINT\";
+                string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
+                ErrorPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0] + @"\";
+                CreateDirectory(ErrorPath);
+
+                File.WriteAllText(ErrorPath + "Error.txt", Ex.Message + Ex.StackTrace);
+                SendMessage(Ex.Message + Ex.StackTrace);
+                tmGenera.Enabled = true;
+                tmGenera.Start();
+            }    
         }
         public Parametrizables GetParametros(int i)
         {
