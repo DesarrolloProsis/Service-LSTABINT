@@ -9,7 +9,7 @@ using LSTABINT_SERV.Model;
 using Telegram.Bot;
 using Ionic.Zip;
 using System.Threading;
-
+using SimpleImpersonation;
 
 namespace LSTABINT_SERV
 {
@@ -60,91 +60,54 @@ namespace LSTABINT_SERV
             if (!task.Wait(TimeSpan.FromMinutes(5)))
                 SendMessage("La generación de una LSTABINT tardó demasiado, se recomienda checar la conexión SQL");
         }
-        public bool Conexion()
-        {
-            try
-            {
-                Ping ping = new Ping();
-                PingReply pingReply = ping.Send("10.1.10.111");
-                //PingReply pingReply = ping.Send("192.168.0.69");
-                if (pingReply.Status == IPStatus.Success)
-                    return true;
-                else
-                    return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+
         private void GeneraArchivo()
         {
-            try
+            if (!Conexion())
             {
-                if (!Conexion())
+                SendMessage("La conexión al servidor ha fallado");
+            }
+            else
+            {
+                foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                 {
-                    SendMessage("La conexión al servidor ha fallado");
+                    File.Delete(item);
                 }
-                else
+                for (int i = 0; i < 2; i++)
                 {
-                    foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
-                    {
-                        File.Delete(item);
-                    }
-                    for (int i = 0; i < 2; i++)
-                    {
-                        bool Validado = false;
-                        Parametrizables Parametros = new Parametrizables();
+                    bool Validado = false;
+                    Parametrizables Parametros = new Parametrizables();
 
-                        Parametros = GetParametros(i);
-                        CreateLSTABINT(Parametros, i);
-                        Validado = Validaciones(Parametros, i);
+                    Parametros = GetParametros(i);
+                    CreateLSTABINT(Parametros, i);
+                    Validado = Validaciones(Parametros, i);
 
-                        if (Validado)
+                    if (Validado)
+                    {
+                        db.HistoricoListas.Add(new HistoricoListas
                         {
-                            db.HistoricoListas.Add(new HistoricoListas
-                            {
-                                Fecha_Creacion = DateTime.Now,
-                                Tamaño = TamañoLista[i] + " KB",
-                                Extension = Parametros.extension.ToString("D3"),
-                                Tipo = i == 0 ? "MultiModal" : "Exclusivo"
-                            });
-                            var listas = db.Parametrizables.ToArray();
-                            listas[i].extension++;
-                            if (listas[i].extension > 999)
-                            {
-                                listas[i].extension = 1;
-                            }
-                        }
-                        else
+                            Fecha_Creacion = DateTime.Now,
+                            Tamaño = TamañoLista[i] + " KB",
+                            Extension = Parametros.extension.ToString("D3"),
+                            Tipo = i == 0 ? "MultiModal" : "Exclusivo"
+                        });
+                        var listas = db.Parametrizables.ToArray();
+                        listas[i].extension++;
+                        if (listas[i].extension > 999)
                         {
-                            SendMessage(Message);
+                            listas[i].extension = 1;
                         }
                     }
-
-                    db.SaveChanges();
+                    else
+                    {
+                        SendMessage(Message);
+                    }
                 }
-
-                tmGenera.Enabled = true;
-                tmGenera.Start();
+                db.SaveChanges();
             }
-            catch (Exception Ex)
-            {
-                string ErrorPath = @"C:\temporal\Errores\LSTABINT\";
-                string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
-                ErrorPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0] + @"\";
-                CreateDirectory(ErrorPath);
-                string Extension = db.Parametrizables.FirstOrDefault().extension.ToString();
-
-                File.WriteAllText(ErrorPath + "Error" + Extension + ".txt", Ex.Message + Ex.StackTrace);
-                SendMessage("Ocurrió un error en la generación de la LSTABINT." + Extension + ". Abre el archivo Error.");
-
-                tmGenera.Enabled = true;
-                tmGenera.Start();
-            }
-
+            tmGenera.Enabled = true;
+            tmGenera.Start();
         }
-
         public Parametrizables GetParametros(int i)
         {
             Parametrizables Parametros = new Parametrizables();
@@ -157,7 +120,9 @@ namespace LSTABINT_SERV
                 Parametros.extension = parametrizable[i].extension;
 
                 CreateDirectory(Parametros.origen);
+
                 Parametros.origen = Parametros.origen + Parametros.extension.ToString("D3");
+
                 return Parametros;
             }
             catch (Exception)
@@ -166,30 +131,34 @@ namespace LSTABINT_SERV
             }
 
         }
-
         public void CreateLSTABINT(Parametrizables Parametros, int i)
         {
-            string consulta;
-            SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
+            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+            {
+                using (SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+                {
+                    string consulta;
+                    SQLConn.Open();
+                    if (i == 0)
+                        consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + Parametros.origen + "\"" + " -T -c -t \\0'";
 
-            SQLConn.Open();
-            if (i == 0)
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + Parametros.origen + "\"" + " -T -c -t \\0'";
+                    else
+                        consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + Parametros.origen + "\"" + " -T -c -t \\0'";
 
-            else
-                consulta = "Exec master..xp_Cmdshell 'bcp " + "\"select iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),24-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),24-LEN(NumTag)))+(''01'')+ IIF(SaldoTag>=13500 AND StatusTag = 1, ''01'',''00'') + IIF(SaldoTag>9999999,CONVERT(nvarchar,SUBSTRING(CONVERT(nvarchar,CAST(SaldoTag as numeric)),LEN(CAST(SaldoTag as numeric))-7,8)),REPLICATE(''0'',8-LEN(CAST(SaldoTag as numeric)) )+ CONVERT(nvarchar,CAST(SaldoTag as numeric)))+iif(SUBSTRING(NumTag,1,3) = ''501'',SUBSTRING(NumTag,1,3)+''00''+SUBSTRING(NumTag,4,LEN(NumTag)-3) + REPLICATE(SPACE(1),19-LEN(NumTag)-2), NumTag + REPLICATE(SPACE(1),19-LEN(NumTag)))+ IIF(StatusResidente = 1,''01'',''00'') + REPLICATE(''0'',49) from GTDB.dbo.Tags ORDER BY NumTag ASC;\" queryout \"" + Parametros.origen + "\"" + " -T -c -t \\0'";
-
-            var cmd = new SqlCommand(consulta, SQLConn);
-            cmd.CommandTimeout = 3 * 60;
-            cmd.ExecuteNonQuery();
-            SQLConn.Close();
+                    var cmd = new SqlCommand(consulta, SQLConn);
+                    cmd.CommandTimeout = 3 * 60;
+                    cmd.ExecuteNonQuery();
+                    SQLConn.Close();
+                }
+            });
         }
-
         public bool Validaciones(Parametrizables Parametros, int i)
         {
             var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
-            string[] lines = System.IO.File.ReadAllLines(Parametros.origen);
-            var countlines = lines.LongLength.ToString("D6");
+
+            string[] lines = File.ReadAllLines(Parametros.origen);
+            string countlines = lines.LongLength.ToString("D6");
 
             if (CountValidation(lines.LongLength))
             {
@@ -200,9 +169,13 @@ namespace LSTABINT_SERV
                 string[] header = new string[1] { encabezados };
                 try
                 {
-                    File.Delete(Parametros.origen);
-                    File.AppendAllText(Parametros.origen, encabezados);
-                    File.AppendAllLines(Parametros.origen, lines);
+                    UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+                    Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+                    {
+                        File.Delete(Parametros.origen);
+                        File.AppendAllLines(Parametros.origen, header);
+                        File.AppendAllLines(Parametros.origen, lines);
+                    });
                     MoverLstabint(Parametros, i);
                     return true;
                 }
@@ -210,9 +183,7 @@ namespace LSTABINT_SERV
                 {
                     Message = "Hubo un problema para generar la LSTABINT." + Parametros.extension + ": " + Ex.Message;
                     return false;
-                    throw;
                 }
-                
             }
             else
             {
@@ -221,8 +192,6 @@ namespace LSTABINT_SERV
                 return false;
             }
         }
-
-
         public bool CountValidation(long ListaCount)
         {
             long TagsCount = db.Tags.Count();
@@ -232,53 +201,71 @@ namespace LSTABINT_SERV
             else
                 return false;
         }
-
         private void MoverLstabint(Parametrizables Parametros, int i)
         {
             string nuevoorigen;
-            if (i == 1)
-            {
-                foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
-                {
-                    File.Delete(item);
-                }
-            }
-
             nuevoorigen = GuardarLSTABINT(Parametros, i);
-            TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
-            //File.Copy(nuevoorigen, var.VDestino + var.extension);
-            File.Delete(nuevoorigen);
+            UserCredentials credenciales = new UserCredentials("GEAINT", "G3jRm5f1");
+            Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+            {
+                if (i == 1)
+                {
+                    foreach (var item in Directory.GetFiles(@"\\10.1.10.111\geaint\MONTOMINIMO", "LSTABINT.*"))
+                    {
+                        File.Delete(item);
+                    }
+                }
+                TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
+                File.Copy(nuevoorigen, Parametros.destino + Parametros.extension);
+                File.Delete(nuevoorigen);
+            });   
         }
-
         public string GuardarLSTABINT(Parametrizables Parametros, int i)
         {
             string LstabintPath = db.Parametrizables.ToArray()[i].destinoresidente;
             string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
+
             LstabintPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0];
-            CreateDirectory(LstabintPath);
+            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+            {
+                CreateDirectory(LstabintPath);
+                LstabintPath += @"\LSTABINT." + Parametros.extension.ToString("D3");
 
-            LstabintPath += @"\LSTABINT." + Parametros.extension.ToString("D3"); 
+                if (File.Exists(LstabintPath))
+                    File.Delete(LstabintPath);
+                else if (File.Exists(LstabintPath + ".zip"))
+                    File.Delete(LstabintPath + ".zip");
 
-            if (File.Exists(LstabintPath))
-                File.Delete(LstabintPath);
-            else if (File.Exists(LstabintPath + ".zip"))
-                File.Delete(LstabintPath + ".zip");
+                File.Move(Parametros.origen, LstabintPath);
 
-            File.Move(Parametros.origen, LstabintPath);
-
-            ZipFile zips = new ZipFile();
-            zips.AddFile(LstabintPath);
-            zips.Save(LstabintPath + ".zip");
-
+                ZipFile zips = new ZipFile();
+                zips.AddFile(LstabintPath);
+                zips.Save(LstabintPath + ".zip");
+            });
             return LstabintPath;
         }
-
+        public bool Conexion()
+        {
+            try
+            {
+                Ping ping = new Ping();
+                PingReply pingReply = ping.Send("10.1.10.111");
+                if (pingReply.Status == IPStatus.Success)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public async void SendMessage(string Mensaje)
         {
             TelegramBotClient Bot = new TelegramBotClient("834404388:AAG8JcPTHi9API16h1TF5C_EgsB78QToaP8");
             await Bot.SendTextMessageAsync(-364639169, Mensaje);
         }
-
         public void CreateDirectory(string Directory)
         {
             bool Exists = System.IO.Directory.Exists(Directory);

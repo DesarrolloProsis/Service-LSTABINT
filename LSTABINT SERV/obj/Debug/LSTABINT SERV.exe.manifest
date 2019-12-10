@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="159216">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="158704">
       <assemblyIdentity name="LSTABINT SERV" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>FIOh9COCKD0WcvWpLegekYmq3Pzpp9LVRnrLWMsvewI=</dsig:DigestValue>
+        <dsig:DigestValue>dFuqFXKgvNM6o0EyFyz2AFVwE/d7ZBLBQpYhQVM3Hm8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -110,6 +110,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>9Yw3T/yq5ONtdA2Q+/f+cNCrtzKM2a86CntwgD6ZS6Q=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SimpleImpersonation.dll" size="10752">
+      <assemblyIdentity name="SimpleImpersonation" version="3.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>0XSDjE6RGjMnbkRuQhWzWvp6M/bbP2OPW1qWz7Rt9jw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -266,6 +278,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>Kb1MG3ErFDIwrr4QRkhN/O17jGKhHpcaIb5mZKJ8Yqk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Security.Principal.Windows.dll" size="23688">
+      <assemblyIdentity name="System.Security.Principal.Windows" version="4.1.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>FDoYC5rBHLn4gUqK2nH20QG4zO3EQ1K6YMblI2mE1Dw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
