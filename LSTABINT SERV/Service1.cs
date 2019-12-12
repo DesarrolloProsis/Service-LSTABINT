@@ -47,18 +47,19 @@ namespace LSTABINT_SERV
 
         protected override void OnStop()
         {
-            File.WriteAllText(@"C:\temporal\LSTABINTSERVStopped.txt", "Se detuvo");
             SendMessage("LSTABINT Service se detuvo");
         }
 
         private void TmGenera_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             tmGenera.Enabled = false;
-            tmGenera.Stop();
+            //tmGenera.Stop();
 
-            var task = Task.Run(() => GeneraArchivo());
-            if (!task.Wait(TimeSpan.FromMinutes(5)))
-                SendMessage("La generación de una LSTABINT tardó demasiado, se recomienda checar la conexión SQL");
+            GeneraArchivo();
+
+            //var task = Task.Run(() => GeneraArchivo());
+            //if (!task.Wait(TimeSpan.FromMinutes(5)))
+            //    SendMessage("La generación de una LSTABINT tardó demasiado, se recomienda checar la conexión SQL");
         }
 
         private void GeneraArchivo()
@@ -71,6 +72,7 @@ namespace LSTABINT_SERV
                 }
                 else
                 {
+                    UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
                     foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
                         File.Delete(item);
@@ -86,29 +88,39 @@ namespace LSTABINT_SERV
 
                         if (Validado)
                         {
-                            db.HistoricoListas.Add(new HistoricoListas
+                            Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
                             {
-                                Fecha_Creacion = DateTime.Now,
-                                Tamaño = TamañoLista[i] + " KB",
-                                Extension = Parametros.extension.ToString("D3"),
-                                Tipo = i == 0 ? "MultiModal" : "Exclusivo"
+                                db.HistoricoListas.Add(new HistoricoListas
+                                {
+                                    Fecha_Creacion = DateTime.Now,
+                                    Tamaño = TamañoLista[i] + " KB",
+                                    Extension = Parametros.extension.ToString("D3"),
+                                    Tipo = i == 0 ? "MultiModal" : "Exclusivo"
+                                });
+                                var listas = db.Parametrizables.ToArray();
+                                listas[i].extension++;
+                                if (listas[i].extension > 999)
+                                {
+                                    listas[i].extension = 1;
+                                }
                             });
-                            var listas = db.Parametrizables.ToArray();
-                            listas[i].extension++;
-                            if (listas[i].extension > 999)
-                            {
-                                listas[i].extension = 1;
-                            }
+                            SendMessage("Se sumó la extensión! Se acabo el proceso!");
                         }
                         else
                         {
                             SendMessage(Message);
                         }
                     }
-                    db.SaveChanges();
+                    Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+                    {
+                        db.SaveChanges();
+                        SendMessage("¡ALV ya se guardo en la Histórico! ¡Ahora ve a factorizar el código!");
+                    });
                 }
                 tmGenera.Enabled = true;
                 tmGenera.Start();
+                SendMessage("Timer otra vez en funcionamiento");
+
             }
             catch (Exception Ex)
             {
@@ -121,26 +133,29 @@ namespace LSTABINT_SERV
                 SendMessage(Ex.Message + Ex.StackTrace);
                 tmGenera.Enabled = true;
                 tmGenera.Start();
-            }    
+            }
         }
         public Parametrizables GetParametros(int i)
         {
             Parametrizables Parametros = new Parametrizables();
             try
             {
-                var parametrizable = db.Parametrizables.ToList();
+                UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+                Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+                {
+                    var parametrizable = db.Parametrizables.ToList();
 
-                Parametros.origen = parametrizable[i].origen;
-                Parametros.destino = parametrizable[i].destino;
-                Parametros.extension = parametrizable[i].extension;
+                    Parametros.origen = parametrizable[i].origen;
+                    Parametros.destino = parametrizable[i].destino;
+                    Parametros.extension = parametrizable[i].extension;
 
-                CreateDirectory(Parametros.origen);
+                    CreateDirectory(Parametros.origen);
 
-                Parametros.origen = Parametros.origen + Parametros.extension.ToString("D3");
-
+                    Parametros.origen = Parametros.origen + Parametros.extension.ToString("D3");
+                });
                 return Parametros;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Parametros;
             }
@@ -171,8 +186,12 @@ namespace LSTABINT_SERV
         public bool Validaciones(Parametrizables Parametros, int i)
         {
             var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
-
-            string[] lines = File.ReadAllLines(Parametros.origen);
+            string[] lines = { "" };
+            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+            {
+                lines = File.ReadAllLines(Parametros.origen);
+            });
             string countlines = lines.LongLength.ToString("D6");
 
             if (CountValidation(lines.LongLength))
@@ -184,7 +203,6 @@ namespace LSTABINT_SERV
                 string[] header = new string[1] { encabezados };
                 try
                 {
-                    UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
                     Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
                     {
                         File.Delete(Parametros.origen);
@@ -209,7 +227,13 @@ namespace LSTABINT_SERV
         }
         public bool CountValidation(long ListaCount)
         {
-            long TagsCount = db.Tags.Count();
+            long TagsCount = 0;
+
+            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
+            {
+                TagsCount = db.Tags.Count();
+            });
 
             if (ListaCount == TagsCount)
                 return true;
@@ -220,6 +244,7 @@ namespace LSTABINT_SERV
         {
             string nuevoorigen;
             nuevoorigen = GuardarLSTABINT(Parametros, i);
+            //SendMessage("Wow, ya se guardó y comprimió");
             UserCredentials credenciales = new UserCredentials("GEAINT", "G3jRm5f1");
             Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
             {
@@ -233,17 +258,19 @@ namespace LSTABINT_SERV
                 TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
                 File.Copy(nuevoorigen, Parametros.destino + Parametros.extension);
                 File.Delete(nuevoorigen);
-            });   
+                //SendMessage("Wow,ahora se envió y elimino!");
+            });
         }
         public string GuardarLSTABINT(Parametrizables Parametros, int i)
         {
-            string LstabintPath = db.Parametrizables.ToArray()[i].destinoresidente;
-            string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
-
-            LstabintPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0];
+            string LstabintPath = string.Empty;
             UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
             Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
             {
+                LstabintPath = db.Parametrizables.ToArray()[i].destinoresidente;
+                string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
+
+                LstabintPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0];
                 CreateDirectory(LstabintPath);
                 LstabintPath += @"\LSTABINT." + Parametros.extension.ToString("D3");
 
