@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="160256">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="159744">
       <assemblyIdentity name="LSTABINT SERV" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>9rOV7S/SRHk+6AR+yZ19xtYH9n/qTZmUq6PVnhcRwUE=</dsig:DigestValue>
+        <dsig:DigestValue>Nm4G2hTr7C5MtkjTebuzJsu5Ur9+xRfIR2JoAEm5/rQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

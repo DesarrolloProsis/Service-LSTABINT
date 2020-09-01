@@ -4,18 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.ServiceProcess;
-using System.Threading.Tasks;
+using System.Timers;
 using LSTABINT_SERV.Model;
 using Telegram.Bot;
 using Ionic.Zip;
-using System.Threading;
 using SimpleImpersonation;
 
 namespace LSTABINT_SERV
 {
     public partial class LSTABINTSERVICE : ServiceBase
     {
-        private System.Timers.Timer tmGenera = null;
+        Timer tmGenera = new Timer();
         private GTDBEntities1 db = new GTDBEntities1();
         string[] TamañoLista = new string[2];
         string Message = string.Empty;
@@ -28,7 +27,7 @@ namespace LSTABINT_SERV
         {
             tmGenera = new System.Timers.Timer
             {
-                Interval = 10000 //10 segundos
+                Interval = 300000 //10 segundos
             };
             tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
             tmGenera.Enabled = true;
@@ -36,11 +35,8 @@ namespace LSTABINT_SERV
         }
         protected override void OnStart(string[] args)
         {
-            tmGenera = new System.Timers.Timer
-            {
-                Interval = 300000 //5 minutos = 300 segundos
-            };
             tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
+            tmGenera.Interval = 300000;
             tmGenera.Enabled = true;
             tmGenera.Start();
         }
@@ -52,10 +48,21 @@ namespace LSTABINT_SERV
 
         private void TmGenera_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            tmGenera.Enabled = false;
-            //tmGenera.Stop();
+            try
+            {
+                tmGenera.Enabled = false;
+                tmGenera.Stop();
 
-            GeneraArchivo();
+                GeneraArchivo();
+
+                tmGenera.Enabled = true;
+                tmGenera.Start();
+            }
+            catch (Exception ex)
+            {
+                tmGenera.Enabled = true;
+                tmGenera.Start();
+            }
 
             //var task = Task.Run(() => GeneraArchivo());
             //if (!task.Wait(TimeSpan.FromMinutes(5)))
@@ -104,7 +111,6 @@ namespace LSTABINT_SERV
                                     listas[i].extension = 1;
                                 }
                             });
-                            SendMessage("Se sumó la extensión! Se acabo el proceso!");
                         }
                         else
                         {
@@ -114,25 +120,21 @@ namespace LSTABINT_SERV
                     Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
                     {
                         db.SaveChanges();
-                        SendMessage("¡ALV ya se guardo en la Histórico! ¡Ahora ve a factorizar el código!");
+                        //SendMessage("¡ALV ya se guardo en la Histórico! ¡Ahora ve a factorizar el código!");
                     });
                 }
-                tmGenera.Enabled = true;
-                tmGenera.Start();
-                SendMessage("Timer otra vez en funcionamiento");
-
             }
             catch (Exception Ex)
             {
-                string ErrorPath = @"C:\temporal\Errores\LSTABINT\";
-                string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
-                ErrorPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0] + @"\";
-                CreateDirectory(ErrorPath);
+                //string ErrorPath = @"C:\temporal\Errores\LSTABINT\";
+                //string[] ArrayFecha = DateTime.Now.ToString("dd MMMM yyyy").Split(' ');
+                //ErrorPath += ArrayFecha[2] + @"\" + ArrayFecha[1] + @"\" + ArrayFecha[0] + @"\";
+                //CreateDirectory(ErrorPath);
 
-                File.WriteAllText(ErrorPath + "Error.txt", Ex.Message + Ex.StackTrace);
+                //File.WriteAllText(ErrorPath + "Error.txt", Ex.Message + Ex.StackTrace);
                 SendMessage(Ex.Message + Ex.StackTrace);
-                tmGenera.Enabled = true;
-                tmGenera.Start();
+                //tmGenera.Enabled = true;
+                //tmGenera.Start();
             }
         }
         public Parametrizables GetParametros(int i)
@@ -256,7 +258,7 @@ namespace LSTABINT_SERV
                     }
                 }
                 TamañoLista[i] = new FileInfo(nuevoorigen).Length.ToString();
-                File.Copy(nuevoorigen, Parametros.destino + Parametros.extension);
+                File.Copy(nuevoorigen, Parametros.destino + Parametros.extension.ToString("D3"));
                 File.Delete(nuevoorigen);
                 //SendMessage("Wow,ahora se envió y elimino!");
             });
@@ -315,6 +317,11 @@ namespace LSTABINT_SERV
             {
                 System.IO.Directory.CreateDirectory(Directory);
             }
+        }
+
+        private void eventLog1_EntryWritten(object sender, System.Diagnostics.EntryWrittenEventArgs e)
+        {
+
         }
     }
 }
