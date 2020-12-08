@@ -79,7 +79,7 @@ namespace LSTABINT_SERV
                 }
                 else
                 {
-                    UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+                    UserCredentials credenciales = new UserCredentials("Usuario", "okRmTJsCI74");
                     foreach (var item in Directory.GetFiles(@"C:\temporal\", "LSTABINT.*"))
                     {
                         File.Delete(item);
@@ -142,7 +142,7 @@ namespace LSTABINT_SERV
             Parametrizables Parametros = new Parametrizables();
             try
             {
-                UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+                UserCredentials credenciales = new UserCredentials("Usuario", "okRmTJsCI74");
                 Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
                 {
                     var parametrizable = db.Parametrizables.ToList();
@@ -165,7 +165,7 @@ namespace LSTABINT_SERV
         }
         public void CreateLSTABINT(Parametrizables Parametros, int i)
         {
-            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            UserCredentials credenciales = new UserCredentials("Usuario", "okRmTJsCI74");
             Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
             {
                 using (SqlConnection SQLConn = new SqlConnection("data source=.;initial catalog=GTDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
@@ -189,7 +189,7 @@ namespace LSTABINT_SERV
         {
             var creationdate = DateTime.Now.AddDays(-1).ToString("yyyyMMddHHmm");
             string[] lines = { "" };
-            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            UserCredentials credenciales = new UserCredentials("Usuario", "okRmTJsCI74");
             Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
             {
                 lines = File.ReadAllLines(Parametros.origen);
@@ -231,7 +231,7 @@ namespace LSTABINT_SERV
         {
             long TagsCount = 0;
 
-            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            UserCredentials credenciales = new UserCredentials("Usuario", "okRmTJsCI74");
             Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
             {
                 TagsCount = db.Tags.Count();
@@ -266,7 +266,7 @@ namespace LSTABINT_SERV
         public string GuardarLSTABINT(Parametrizables Parametros, int i)
         {
             string LstabintPath = string.Empty;
-            UserCredentials credenciales = new UserCredentials("Usuario", "LaVacaLoca16");
+            UserCredentials credenciales = new UserCredentials("Usuario", "okRmTJsCI74");
             Impersonation.RunAsUser(credenciales, LogonType.Interactive, () =>
             {
                 LstabintPath = db.Parametrizables.ToArray()[i].destinoresidente;

@@ -55,3 +55,33 @@ C:\Users\Usuario\Desktop\Service-LSTABINT\Service-LSTABINT\WindowsFormsApp2\obj\
 C:\Users\Usuario\Desktop\Service-LSTABINT\Service-LSTABINT\WindowsFormsApp2\obj\Debug\Prueba.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Service-LSTABINT\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
 C:\Users\Usuario\Desktop\Service-LSTABINT\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe.config
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.pdb
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Ionic.Zip.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.exe
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Net.Http.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\SimpleImpersonation.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Telegram.Bot.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.pdb
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\LSTABINT SERV.exe.config
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.xml
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\SimpleImpersonation.xml
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Telegram.Bot.xml
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\Prueba.csprojAssemblyReference.cache
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Form1.resources
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\Prueba.csproj.GenerateResource.cache
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\Prueba.csproj.CoreCompileInputs.cache
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\Prueba.csproj.CopyComplete
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+C:\Users\LANUBE\Documents\GitHub\Service-LSTABINT\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
