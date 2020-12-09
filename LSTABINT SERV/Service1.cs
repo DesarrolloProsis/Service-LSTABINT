@@ -15,7 +15,7 @@ namespace LSTABINT_SERV
     public partial class LSTABINTSERVICE : ServiceBase
     {
         Timer tmGenera = new Timer();
-        private GTDBEntities1 db = new GTDBEntities1();
+        private GTDB db = new GTDB();
         string[] TamañoLista = new string[2];
         string Message = string.Empty;
 
@@ -27,7 +27,7 @@ namespace LSTABINT_SERV
         {
             tmGenera = new System.Timers.Timer
             {
-                Interval = 300000 //10 segundos
+                Interval = 10000 //10 segundos
             };
             tmGenera.Elapsed += new System.Timers.ElapsedEventHandler(TmGenera_Elapsed);
             tmGenera.Enabled = true;

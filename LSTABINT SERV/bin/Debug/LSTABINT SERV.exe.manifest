@@ -14,16 +14,16 @@
       </applicationRequestMinimum>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!--
-          Opciones del manifiesto de Control de cuentas de usuario
-          Si quiere cambiar el nivel de Control de cuentas de usuario de Windows, reemplace el
-          nodo requestedExecutionLevel por alguno de los siguientes.
+          Opciones del manifiesto de UAC
+          Si desea cambiar el nivel de Control de cuentas de usuario de Windows, reemplace el 
+          nodo requestedExecutionLevel por uno de los siguientes.
 
         <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
         <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
         <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-         Si desea usar la virtualización de archivos y del Registro para la
-         compatibilidad con versiones anteriores, elimine el nodo requestedExecutionLevel.
+         Si desea usar Virtualización de archivos y Registro para compatibilidad con 
+         versiones anteriores, elimine el nodo requestedExecutionLevel.
     -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="159744">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LSTABINT SERV.exe" size="53248">
       <assemblyIdentity name="LSTABINT SERV" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>fStXNYwFnTlHdFYgFzE9f8bLNDN0gyBHqhq+HNWy1Tk=</dsig:DigestValue>
+        <dsig:DigestValue>qINxQEunBP/scD/mg51Mmqbjx5vTwd9RoSfB5+WJD8Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -305,31 +305,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="LSTABINT SERV.exe.config" size="2271">
+  <file name="LSTABINT SERV.exe.config" size="1700">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>D0ZxI/BwBTMiO+OLae5obqJWWqTnSMLX3s0yzEbMy5I=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Model\AppDbContext.Context.tt" size="22936">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mN0oepAjKaDH1uLnbdYrMWLEutgs96i7QZVvYb23kdY=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Model\AppDbContext.tt" size="25281">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>qxSqxrTPgYY5x6O9lGW06NIJp7/XrGqEcLY9Lou6M3Y=</dsig:DigestValue>
+      <dsig:DigestValue>BYda28sy+FqD/BJKQd9KgnVbGOeVWDMCRNupiE1tRME=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
